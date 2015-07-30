@@ -13,7 +13,7 @@ app.controller('mainCtrl', function($scope) {
         console.log(response);
       }
     });
-  }
+  };
   gapi.client.request({
     path: '/games/v1/applications/365755626363',
     callback: function(response) {
@@ -58,12 +58,15 @@ app.controller('mainCtrl', function($scope) {
 
 function onSignIn(googleUser) {
   console.log(googleUser.getBasicProfile());
+  loadApp();
   gapi.client.request({
     path: '/games/v1/players/me',
     callback: function(response) {
+      document.getElementById("avitar").src = response.avatarImageUrl;
       console.log(response);
     }
   });
+  
 }
 
   
