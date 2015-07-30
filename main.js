@@ -1,11 +1,42 @@
 window.onload = function(){
-  gapi.client.request({
+  //js
+};
+
+var app = angular.module('test', []);
+
+app.controller('mainCtrl', function($scope) {
+  $scope.listMatches = function() {
+    gapi.client.request({
       path: '/games/v1/turnbasedmatches',
+      callback: function(response) {
+        $scope.matches = response.items;
+        console.log(response);
+      }
+    });
+  };
+  $scope.createMatch = function() {
+    gapi.client.request({
+      path: '/games/v1/turnbasedmatches/create',
+      params: {
+        "kind": "games#turnBasedMatchCreateRequest",
+        "variant": 0,
+        "invitedPlayerIds": [
+          //playerIDs
+        ],
+        "autoMatchingCriteria": {
+          "kind": "games#turnBasedAutoMatchingCriteria",
+          "minAutoMatchingPlayers": 2,
+          "maxAutoMatchingPlayers": 8,
+          "exclusiveBitmask": 0
+        },
+        "requestId": 0
+      },
       callback: function(response) {
         console.log(response);
       }
     });
-};
+  };
+});
 
 
 function onSignIn(googleUser) {
@@ -21,7 +52,3 @@ function signinCallback(auth) {
   console.log(auth);
 }
   
-
-
-var element = document.querySelector("#greeting");
-element.innerText = "Hello, world!";
