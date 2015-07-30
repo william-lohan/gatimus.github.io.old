@@ -51,7 +51,6 @@ app.controller('mainCtrl', function($scope) {
 
 function onSignIn(googleUser) {
   console.log(googleUser.getBasicProfile());
-  loadApp();
   gapi.client.request({
     path: '/games/v1/players/me',
     callback: function(response) {
