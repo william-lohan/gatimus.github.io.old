@@ -50,7 +50,7 @@ app.controller('mainCtrl', function($scope) {
 function onSignIn(googleUser) {
   console.log(googleUser.getBasicProfile());
   gapi.client.request({
-    path: '/games/v1/applications/365755626363',
+    path: '/games/v1/players/me',
     callback: function(response) {
       console.log(response);
     }
