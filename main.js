@@ -1,8 +1,6 @@
 window.onload = function(){
   gapi.client.load('games','v1',function(response) {
-        var request = gapi.client.games.leaderboards.list(
-      {maxResults: 5}
-    );
+        var request = gapi.client.games.turnbasedmatches();
     request.execute(function(response) {
       console.log(response);
     });
