@@ -21,7 +21,7 @@ app.controller('mainCtrl', function($scope) {
         "kind": "games#turnBasedMatchCreateRequest",
         //"variant": 0,
         "invitedPlayerIds": [
-          //playerIds
+          "me"
         ],
         "autoMatchingCriteria": {
           "kind": "games#turnBasedAutoMatchingCriteria",
@@ -41,11 +41,13 @@ app.controller('mainCtrl', function($scope) {
 
 
 function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail());
+  console.log(googleUser.getBasicProfile());
+  gapi.client.request({
+    path: '/games/v1/players/me',
+    callback: function(response) {
+      console.log(response);
+    }
+  });
 }
 
   
