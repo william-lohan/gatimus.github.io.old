@@ -1,10 +1,10 @@
 window.onload = function(){
-  gapi.client.load('games','v1',function(response) {
-        var request = gapi.client.games.turnbasedmatches.list();
-    request.execute(function(response) {
-      console.log(response);
+  gapi.client.request({
+      path: '/games/v1/turnbasedmatches',
+      callback: function(response) {
+        console.log(response);
+      }
     });
-      });
 };
 
 
