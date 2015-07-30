@@ -21,7 +21,7 @@ app.controller('mainCtrl', function($scope) {
         "kind": "games#turnBasedMatchCreateRequest",
         "variant": 0,
         "invitedPlayerIds": [
-          //playerIDs
+          "115091908605712260933"
         ],
         "autoMatchingCriteria": {
           "kind": "games#turnBasedAutoMatchingCriteria",
