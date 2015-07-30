@@ -19,7 +19,7 @@ app.controller('mainCtrl', function($scope) {
       path: '/games/v1/turnbasedmatches/create',
       params: {
         "kind": "games#turnBasedMatchCreateRequest",
-        "variant": 0,
+        //"variant": 0,
         "invitedPlayerIds": [
           //playerIds
         ],
@@ -29,7 +29,7 @@ app.controller('mainCtrl', function($scope) {
           "maxAutoMatchingPlayers": 8,
           "exclusiveBitmask": 0
         },
-        "requestId": 0
+        "requestId": 1
       },
       method: 'post',
       callback: function(response) {
