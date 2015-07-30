@@ -35,7 +35,7 @@ app.controller('mainCtrl', function($scope) {
         "autoMatchingCriteria": {
           "kind": "games#turnBasedAutoMatchingCriteria",
           "minAutoMatchingPlayers": 2,
-          "maxAutoMatchingPlayers": 8,
+          "maxAutoMatchingPlayers": 2,
           "exclusiveBitmask": 0
         },
         "requestId": 1
