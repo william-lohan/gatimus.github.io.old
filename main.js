@@ -14,13 +14,6 @@ app.controller('mainCtrl', function($scope) {
       }
     });
   };
-  gapi.client.request({
-    path: '/games/v1/applications/365755626363',
-    callback: function(response) {
-      $scope.title = response.name;
-      console.log(response);
-    }
-  });
   $scope.listMatches = function() {
     gapi.client.request({
       path: '/games/v1/turnbasedmatches',
