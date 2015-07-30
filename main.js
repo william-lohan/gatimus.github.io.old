@@ -1,6 +1,6 @@
 window.onload = function(){
   gapi.client.load('games','v1',function(response) {
-        var request = gapi.client.games.turnbasedmatches();
+        var request = gapi.client.games.turnbasedmatches.list();
     request.execute(function(response) {
       console.log(response);
     });
