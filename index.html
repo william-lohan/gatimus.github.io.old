@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="test" ng-controller="mainCtrl">
 <head>
-  <title>test</title>
+  <title>{{title}}</title>
   <meta name="google-signin-clientid" content="365755626363-op82946p70rq9v3p1096sgbp1h4m2j1d.apps.googleusercontent.com" />
   <meta name="google-signin-callback" content="signinCallback" />
   <meta name="fetch_basic_profile" content="true" />
@@ -11,6 +11,9 @@
 </head>
 
 <body>
+  <header>
+    <h1>{{title}}</h1>
+  </header>
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
   <div>
     <button ng-click="listMatches()">Refesh</button>
