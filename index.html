@@ -17,7 +17,8 @@
     <button ng-click="createMatch()">New</button>
     <table>
       <tr ng-repeat="match in matches">
-        
+        <td>{{match.matchId}}</td>
+        <td>{{match.status}}</td>
       </tr>
     </table>
   </div>
