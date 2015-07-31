@@ -12,6 +12,7 @@
   <script src="https://apis.google.com/js/client.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
   <script src="main.js"></script>
+  <script src="signin.js"></script>
   <script src="player.js"></script> 
   
   <!--styles-->
@@ -26,14 +27,9 @@
   <img id="avitar" class="img-responsive img-circle">
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
   <div>
-    <button ng-click="listMatches()">Refesh</button>
-    <button ng-click="createMatch()">New</button>
-    <table>
-      <tr ng-repeat="match in matches">
-        <td>{{match.matchId}}</td>
-        <td>{{match.status}}</td>
-      </tr>
-    </table>
+    <button ng-click="state.save()">Save</button>
+    <button ng-click="state.load()">Load</button>
+    <textarea id="text_area"></textarea>
   </div>
 
 </body>
