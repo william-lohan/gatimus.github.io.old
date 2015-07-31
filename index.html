@@ -20,16 +20,16 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body onLoad="loadApp();">
+<body>
   <header>
     <h1>{{title}}</h1>
   </header>
   <img id="avitar" class="img-responsive img-circle">
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
   <div>
-    <button ng-click="state.save()">Save</button>
-    <button ng-click="state.load()">Load</button>
-    <textarea id="text_area" ng-bind="state.body"></textarea>
+    <button class="btn btn-default" onClick="state.save()">Save</button>
+    <button class="btn btn-default" onClick="state.load()">Load</button>
+    <textarea id="text_area"></textarea>
   </div>
 
 </body>

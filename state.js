@@ -8,12 +8,14 @@ state.load = function(){
     method: 'get',
     callback: function(response) {
       state.body = response.data;
+      document.getElementById("text_area").innerText = state.body;
       console.log(response);
     }
   });
 };
 
 state.save = function(){
+  state.body = document.getElementById("text_area").innerText;
   gapi.client.request({
     path: '/appstate/v1/states/0',
     params: {
