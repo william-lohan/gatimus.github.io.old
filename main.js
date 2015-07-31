@@ -39,8 +39,8 @@ createMatch = function() {
       "autoMatchingCriteria": {
         "kind": "games#turnBasedAutoMatchingCriteria",
         "minAutoMatchingPlayers": 2,
-        "maxAutoMatchingPlayers": 2,
-        "exclusiveBitmask": 0
+        "maxAutoMatchingPlayers": 2
+        //"exclusiveBitmask": 0
       },
       "requestId": 1
     },
