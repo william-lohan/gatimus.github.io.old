@@ -51,13 +51,7 @@ app.controller('mainCtrl', function($scope) {
 
 function onSignIn(googleUser) {
   console.log(googleUser.getBasicProfile());
-  gapi.client.request({
-    path: '/games/v1/players/me',
-    callback: function(response) {
-      document.getElementById("avitar").src = response.avatarImageUrl;
-      console.log(response);
-    }
-  });
+  player.loadPlayer();
   
 }
 
