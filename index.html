@@ -29,7 +29,7 @@
   <div>
     <button ng-click="state.save()">Save</button>
     <button ng-click="state.load()">Load</button>
-    <textarea id="text_area"></textarea>
+    <textarea id="text_area" ng-bind="state.body"></textarea>
   </div>
 
 </body>
