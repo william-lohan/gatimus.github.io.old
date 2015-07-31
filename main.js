@@ -23,31 +23,31 @@ app.controller('mainCtrl', function($scope) {
       }
     });
   };
-  $scope.createMatch = function() {
-    gapi.client.request({
-      path: '/games/v1/turnbasedmatches/create',
-      params: {
-        "kind": "games#turnBasedMatchCreateRequest",
-        //"variant": 0,
-        "invitedPlayerIds": [
-          "me"
-        ],
-        "autoMatchingCriteria": {
-          "kind": "games#turnBasedAutoMatchingCriteria",
-          "minAutoMatchingPlayers": 2,
-          "maxAutoMatchingPlayers": 2,
-          "exclusiveBitmask": 0
-        },
-        "requestId": 1
-      },
-      method: 'post',
-      callback: function(response) {
-        console.log(response);
-      }
-    });
-  };
+  
 });
 
 
-
+createMatch = function() {
+  gapi.client.request({
+    path: '/games/v1/turnbasedmatches/create',
+    params: {
+      "kind": "games#turnBasedMatchCreateRequest",
+      //"variant": 0,
+      "invitedPlayerIds": [
+        //"me"
+      ],
+      "autoMatchingCriteria": {
+        "kind": "games#turnBasedAutoMatchingCriteria",
+        "minAutoMatchingPlayers": 2,
+        "maxAutoMatchingPlayers": 2,
+        "exclusiveBitmask": 0
+      },
+      "requestId": 1
+    },
+    method: 'post',
+    callback: function(response) {
+      console.log(response);
+    }
+  });
+};
   
