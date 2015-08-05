@@ -1,7 +1,21 @@
 @import url(http://fonts.googleapis.com/css?family=Orbitron);
 
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: #ffffff;
+}
+
+header {
+  margin: 0px;
+  padding: 0px;
+  color: #a8a8a8;
+  background-color: #232323;
+}
+
 h1 {
   font-family: 'Orbitron', sans-serif;
+  text-transform: lowercase;
 }
 
 #greeting {
