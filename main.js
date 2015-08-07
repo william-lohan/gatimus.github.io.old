@@ -62,6 +62,7 @@ createMatch = function() {
 };
   
 metaData = function() {
+  gapi.client.load('drive', 'v2', function(){});
     var request = gapi.client.drive.files.get({
       'fileId': 'appfolder'
     });
