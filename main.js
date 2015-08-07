@@ -24,6 +24,16 @@ app.controller('mainCtrl', function($scope) {
     });
   };
   
+  $scope.metaData = function() {
+    var request = gapi.client.drive.files.get({
+      'fileId': 'appfolder'
+    });
+    request.execute(function(resp) {
+      console.log('Id: ' + resp.id);
+      console.log('Title: ' + resp.title);
+    });
+  };
+  
 });
 
 
