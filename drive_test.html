@@ -5,7 +5,10 @@
       // Developer Console, https://console.developers.google.com
       var CLIENT_ID = '365755626363-op82946p70rq9v3p1096sgbp1h4m2j1d.apps.googleusercontent.com';
 
-      var SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+      var SCOPES = [
+        'https://www.googleapis.com/auth/drive.file',
+        'https://www.googleapis.com/auth/drive.appfolder'
+      ];
 
       /**
        * Check if current user has authorized this application.
@@ -53,44 +56,36 @@
        * Load Drive API client library.
        */
       function loadDriveApi() {
-        gapi.client.load('drive', 'v2', listFiles);
+        gapi.client.load('drive', 'v2', metaData);
       }
 
-      /**
-       * Print files.
-       */
-      function listFiles() {
-        var request = gapi.client.drive.files.list({
-            'maxResults': 10
-          });
 
-          request.execute(function(resp) {
-            appendPre('Files:');
-            var files = resp.items;
-            if (files && files.length > 0) {
-              for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                appendPre(file.title + ' (' + file.id + ')');
-              }
-            } else {
-              appendPre('No files found.');
-            }
-          });
+      function metaData() {
+        var request = gapi.client.drive.files.get({
+          'fileId': 'appfolder'
+        });
+        request.execute(function(resp) {
+          console.log(resp);
+        });
+        listFilesInApplicationDataFolder(function(res){console.log(res);});
+      };
+      
+      function save(){
+        var data = document.getElementById("data").value;
+        var appState = {
+          text: data
+        };
+        insertFile(appState);
       }
-
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-      function appendPre(message) {
-        var pre = document.getElementById('output');
-        var textContent = document.createTextNode(message + '\n');
-        pre.appendChild(textContent);
+      
+      function load(){
+        downloadFile(function(file){
+          document.getElementById("data").value = JSON.parse(file).text;
+        });
       }
-
+      
     </script>
+    <script src="appData.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=checkAuth">
     </script>
   </head>
@@ -102,6 +97,8 @@
         Authorize
       </button>
     </div>
-    <pre id="output"></pre>
+    <textarea id="data"></textarea>
+    <button onclick="save()">Save</button>
+    <button onclick="load()">Load</button>
   </body>
 </html>
