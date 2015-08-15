@@ -1,16 +1,18 @@
 @import url(http://fonts.googleapis.com/css?family=Orbitron);
 
 body {
-  margin: 0px;
-  padding: 0px;
   background-color: #ffffff;
 }
 
 header {
-  margin: 0px;
-  padding: 0px;
   color: #a8a8a8;
   background-color: #232323;
+}
+
+nav {
+  color: #232323;
+  background-color: #a8a8a8;
+  box-shadow: 0 10px 20px #a8a8a8;
 }
 
 h1 {
@@ -18,9 +20,15 @@ h1 {
   text-transform: lowercase;
 }
 
-#greeting {
-  background-color: #F8F8F8;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 24px;
-  margin: 15px;
+
+/*bootstrap overwrites*/
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #a8a8a8;
+    background-color: #232323;
 }
+
+a {
+    color: #232323;
+    text-decoration: none;
+}
+
