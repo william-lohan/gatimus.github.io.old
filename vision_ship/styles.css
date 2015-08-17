@@ -1,0 +1,15 @@
+@import url(http://fonts.googleapis.com/css?family=VT323);
+
+body {
+  background-color: gray;
+  margin: 0;
+  padding: 0;
+}
+
+#game {
+  background-color: #170833;
+  color: white;
+  font-family: 'VT323', ;
+  width: 640px;
+  margin: auto;
+}
