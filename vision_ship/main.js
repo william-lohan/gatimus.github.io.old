@@ -30,6 +30,18 @@ var Key = {
 
 $( document ).ready(function() {
   init();
+  
+  window.addEventListener("gamepadconnected", function(e) {
+    console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+      e.gamepad.index, e.gamepad.id,
+      e.gamepad.buttons.length, e.gamepad.axes.length);
+  });
+  
+  window.addEventListener("gamepaddisconnected", function(e) {
+    console.log("Gamepad disconnected from index %d: %s",
+      e.gamepad.index, e.gamepad.id);
+  });
+  
 });
 
 function init() {
@@ -79,6 +91,22 @@ function vBlank(event){
     Key.isDown(Key.RIGHT)
   );
 
+  var gamepads = navigator.getGamepads();
+  var pad = gamepads[0];
+  animation.move(
+    pad.buttons[12].pressed,
+    pad.buttons[14].pressed,
+    pad.buttons[13].pressed,
+    pad.buttons[15].pressed
+  );
+  
+  animation.move(
+    pad.axes[1] < -0.5,
+    pad.axes[0] < -0.5,
+    pad.axes[1] > 0.5,
+    pad.axes[0] > 0.5
+  );
+
   bg1.x -= 20;
   if(bg1.x < -60){
     bg1.y = 480 * Math.random();
@@ -91,6 +119,8 @@ function vBlank(event){
     bg2.x = 640;
     score ++;
   }
+  
+  
   
   $("#score").text(score);
 
