@@ -3,8 +3,16 @@ var stage;
 var bg1;
 var bg2;
 var animation;
+var paused = false;
+var moveWindow = false;
 
 var score = 0;
+var highScore = 0;
+
+var mouse = {
+  x: 0,
+  y: 0
+};
 
 var Key = {
   pressed: {},
@@ -71,60 +79,130 @@ function init() {
 
   animation = new Gatimus();
   
+  
   stage = new createjs.Stage("demoCanvas");
   stage.addChild(bg1, bg2, animation);
   
 
   createjs.Ticker.addEventListener("tick", vBlank);
   
+  
   $(document).keydown(function(event){Key.onKeydown(event);});
   $(document).keyup(function(event){Key.onKeyup(event);});
+  
+  
+	$(document).mousemove(function( event ) {
+    $("#debug").text(event.clientX + "," + event.clientY);
+    var moveX = event.clientX - mouse.x;
+    var moveY = event.clientY - mouse.y;
+    if(moveWindow){
+      var currentX = $("#help_dialog").css("left");
+      console.log(currentX);
+      var currentY = $("#help_dialog").css("top");
+      $("#help_dialog").css({
+        left: '+=' + moveX + 'px',
+        top: '+=' + moveY + 'px'
+      });
+    }
+    mouse.x = event.clientX;
+    mouse.y = event.clientY;
+  });
+
+				
   
 }
 
 
 function vBlank(event){
-  animation.move(
-    Key.isDown(Key.UP),
-    Key.isDown(Key.LEFT),
-    Key.isDown(Key.DOWN),
-    Key.isDown(Key.RIGHT)
-  );
-
-  var gamepads = navigator.getGamepads();
-  var pad = gamepads[0];
-  animation.move(
-    pad.buttons[12].pressed,
-    pad.buttons[14].pressed,
-    pad.buttons[13].pressed,
-    pad.buttons[15].pressed
-  );
+  var delta = event.delta / createjs.Ticker.interval;
+  if(!paused){
+    if(Key.isDown(27)){
+      setPaused(true);
+    }
+    animation.move(
+      Key.isDown(Key.UP),
+      Key.isDown(Key.LEFT),
+      Key.isDown(Key.DOWN),
+      Key.isDown(Key.RIGHT)
+    );
   
-  animation.move(
-    pad.axes[1] < -0.5,
-    pad.axes[0] < -0.5,
-    pad.axes[1] > 0.5,
-    pad.axes[0] > 0.5
-  );
-
-  bg1.x -= 20;
-  if(bg1.x < -60){
-    bg1.y = 480 * Math.random();
-    bg1.x = 640;
-    score ++;
+    var gamepads = navigator.getGamepads();
+    var pad = gamepads[0];
+    if (pad){
+      animation.move(
+        pad.buttons[12].pressed,
+        pad.buttons[14].pressed,
+        pad.buttons[13].pressed,
+        pad.buttons[15].pressed
+      );
+      
+      animation.move(
+        pad.axes[1] < -0.5,
+        pad.axes[0] < -0.5,
+        pad.axes[1] > 0.5,
+        pad.axes[0] > 0.5
+      );
+    }
+  
+    bg1.x -= 20 * delta;
+    if(bg1.x < -60){
+      bg1.y = 480 * Math.random();
+      bg1.x = 640;
+      score ++;
+    }
+    bg2.x -= 9 * delta;
+    if(bg2.x < -60){
+      bg2.y = 480 * Math.random();
+      bg2.x = 640;
+      score ++;
+    }
+    
+    var pt = bg1.localToLocal(0,0,animation);
+		if (animation.hitTest(pt.x, pt.y)) {
+		  score = 0;
+		  console.log('Hit!');
+		}
+		
+    pt = bg2.localToLocal(0,0,animation);
+		if (animation.hitTest(pt.x, pt.y)) {
+		  score = 0;
+		  console.log('Hit!');
+		}
+		
+    if(score > highScore){
+      highScore = score;
+    }
+    $("#score_value").text(score);
+    $("#high_score_value").text(highScore);
+  
+    stage.update();
+  } else {
+    if(Key.isDown(27)){
+      setPaused(false);
+    }
   }
-  bg2.x -= 9;
-  if(bg2.x < -60){
-    bg2.y = 480 * Math.random();
-    bg2.x = 640;
-    score ++;
-  }
-  
-  
-  
-  $("#score").text(score);
 
-  stage.update();
 }
 
+function setPaused(x){
+  if(x){
+    paused = true;
+    $("#overlay").show();
+    $("#pause").show();
+  } else {
+    paused = false;
+    $("#overlay").hide();
+    $("#pause").hide();
+  }
+}
+
+function help(x){
+  if(x){
+    setPaused(true);
+    $("#help_dialog").show();
+  } else {
+    setPaused(false);
+    $("#help_dialog").hide();
+  }
+}
 

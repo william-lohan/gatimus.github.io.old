@@ -7,9 +7,75 @@ body {
 }
 
 #game {
+  position: absolute;
   background-color: #170833;
   color: white;
   font-family: 'VT323', ;
   width: 640px;
-  margin: auto;
+  height: 480px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 640px;
+  height: 480px;
+  background: gray;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  display: none;
+}
+
+#score {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#high_score {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#help {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#pause {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+#help_dialog {
+  display: none;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+
+.modal {
+  background-color: white;
+  color: black;
+  width: 300px;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px #000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

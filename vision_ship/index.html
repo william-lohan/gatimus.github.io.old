@@ -4,6 +4,8 @@
 <head>
   <title>CreateJS_test</title>
   
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://code.createjs.com/createjs-2015.05.21.min.js"></script> 
 
@@ -11,9 +13,22 @@
 </head>
 
 <body>
+  <div id="debug">0, 0</div>
   <div id="game">
-    <p>SCORE: <span id="score">0</span></p>
     <canvas id="demoCanvas" width="640" height="480"></canvas>
+    <div id="score">SCORE: <span id="score_value">0</span></div>
+    <div id="high_score">HIGH SCORE: <span id="high_score_value">-</span></div>
+    <div id="help" onclick="help(true);"><i class="fa fa-question-circle"></i></div>
+    <div id="overlay"></div>
+    <div id="pause">PAUSED</div>
+    <div class="modal" id="help_dialog" onmousedown="moveWindow = true;" onmouseup="moveWindow = false;">
+      <div class="modal-title">Help</div>
+      <div class="modal-close" onclick="help(false);"><i class="fa fa-times"></i></div>
+      <hr>
+      <div class="modal-body">
+        asdf
+      </div>
+    </div>
   </div>
   <script src="main.js"></script>
   <script src="gatimus.js"></script>

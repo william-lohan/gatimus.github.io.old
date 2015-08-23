@@ -8,14 +8,19 @@ function Gatimus() {
   };
   var spriteSheet = new createjs.SpriteSheet(data);
   createjs.Sprite.call(this, spriteSheet, "run");
-  this.delta = 10;
+  this.speed = 10;
+  this.y = 208;
 }
 
 Gatimus.prototype = Object.create(createjs.Sprite.prototype);
 
 Gatimus.prototype.move = function(up, left, down, right){
-  if (up) this.y -= this.delta*2;
-  if (left) this.x -= this.delta;
-  if (down) this.y += this.delta*2;
-  if (right) this.x += this.delta;
+  if (up) this.y -= this.speed*2;
+  if (left) this.x -= this.speed;
+  if (down) this.y += this.speed*2;
+  if (right) this.x += this.speed;
+};
+
+Gatimus.prototype.update = function(key, pad, delta){
+  
 };
