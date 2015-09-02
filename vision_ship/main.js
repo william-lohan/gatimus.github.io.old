@@ -161,7 +161,7 @@ function vBlank(event){
       );
     }
     
-    var bgSpeed = 10;
+    var bgSpeed = 5;
     bg1.x -= ((bgSpeed*0.45)*0.45) * delta;
     if(bg1.x < -1280){
       bg1.x = 0;
