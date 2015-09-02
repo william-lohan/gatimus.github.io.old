@@ -1,7 +1,7 @@
 
 var stage;
-var bg1;
-var bg2;
+var bg1, bg2, bg3, bg1e, bg2e, bg3e;
+var shape;
 var animation;
 var paused = false;
 var moveWindow = false;
@@ -56,32 +56,49 @@ function init() {
   
   stage = new createjs.Stage("demoCanvas");
   
-  var data = {
-    images: ["star.png"],
-    frames: {width:256, height:8, count:2},
+
+  var bg1Sprite = new createjs.SpriteSheet({
+    images: ["bg1.png"],
+    frames: {width:1280, height:480, count:1},
     animations: {
-      bg1: 0,
-      bg2: 1
+      bg1: 0
     }
-  };
-  var spriteSheet = new createjs.SpriteSheet(data);
+  });
   
-
-  bg1 = new createjs.Sprite(spriteSheet, "bg1");
-  bg1.y = 480 * Math.random();
-  bg1.x = 640;
-
+  var bg2Sprite = new createjs.SpriteSheet({
+    images: ["bg2.png"],
+    frames: {width:1280, height:480, count:1},
+    animations: {
+      bg2: 0
+    }
+  });
   
-  bg2 = new createjs.Sprite(spriteSheet, "bg2");
-  bg2.y = 480 * Math.random();
-  bg2.x = 640;
+  var bg3Sprite = new createjs.SpriteSheet({
+    images: ["bg3.png"],
+    frames: {width:1280, height:480, count:1},
+    animations: {
+      bg3: 0
+    }
+  });
+
+  bg1 = new createjs.Sprite(bg1Sprite, "bg1");
+  bg2 = new createjs.Sprite(bg2Sprite, "bg2");
+  bg3 = new createjs.Sprite(bg3Sprite, "bg3");
+  
+  
+  bg1e = new createjs.Sprite(bg1Sprite, "bg1");
+  bg1e.x = 1280;
+  bg2e = new createjs.Sprite(bg2Sprite, "bg2");
+  bg2e.x = 1280;
+  bg3e = new createjs.Sprite(bg3Sprite, "bg3");
+  bg3e.x = 1280;
 
 
   animation = new Gatimus();
   
   
   stage = new createjs.Stage("demoCanvas");
-  stage.addChild(bg1, bg2, animation);
+  stage.addChild(bg1, bg2, bg3, bg1e, bg2e, bg3e, animation);
   
 
   createjs.Ticker.addEventListener("tick", vBlank);
@@ -143,19 +160,26 @@ function vBlank(event){
         pad.axes[0] > 0.5
       );
     }
-  
-    bg1.x -= 20 * delta;
-    if(bg1.x < -60){
-      bg1.y = 480 * Math.random();
-      bg1.x = 640;
+    
+    var bgSpeed = 10;
+    bg1.x -= ((bgSpeed*0.45)*0.45) * delta;
+    if(bg1.x < -1280){
+      bg1.x = 0;
       score ++;
     }
-    bg2.x -= 9 * delta;
-    if(bg2.x < -60){
-      bg2.y = 480 * Math.random();
-      bg2.x = 640;
+    bg1e.x = bg1.x+1280;
+    bg2.x -= (bgSpeed*0.45) * delta;
+    if(bg2.x < -1280){
+      bg2.x = 0;
       score ++;
     }
+    bg2e.x = bg2.x+1280;
+    bg3.x -= bgSpeed * delta;
+    if(bg3.x < -1280){
+      bg3.x = 0;
+      score ++;
+    }
+    bg3e.x = bg3.x+1280;
     
     var pt = bg1.localToLocal(0,0,animation);
 		if (animation.hitTest(pt.x, pt.y)) {
