@@ -109,7 +109,7 @@ function init() {
   
   
 	$(document).mousemove(function( event ) {
-    $("#debug").text(event.clientX + "," + event.clientY);
+    //$("#debug").text(event.clientX + "," + event.clientY);
     var moveX = event.clientX - mouse.x;
     var moveY = event.clientY - mouse.y;
     if(moveWindow){
@@ -132,12 +132,13 @@ function init() {
 
 function vBlank(event){
   var delta = event.delta / createjs.Ticker.interval;
+  $("#debug").text("FPS: " + Math.round(1/event.delta*1000));
   if(!paused){
     if(Key.isDown(27)){
       setPaused(true);
     }
     animation.move(
-      Key.isDown(Key.UP),
+      Key.isDown(Key.UP || 65),
       Key.isDown(Key.LEFT),
       Key.isDown(Key.DOWN),
       Key.isDown(Key.RIGHT)
@@ -198,6 +199,12 @@ function vBlank(event){
     }
     $("#score_value").text(score);
     $("#high_score_value").text(highScore);
+    
+    for(var i = 0; i < stage.children.length; i++){
+      if (typeof stage.getChildAt(i).update === "function") { 
+        stage.getChildAt(i).update(delta);
+      }
+    }
   
     stage.update();
   } else {
