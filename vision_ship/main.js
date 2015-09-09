@@ -40,8 +40,28 @@ $( document ).ready(function() {
   
   var preload = new createjs.LoadQueue(true, "./assets/");
   preload.installPlugin(createjs.Sound);
+  preload.on("complete", function(event){
+    console.log(event);
+    $(".progress-container").hide();
+    init();
+  });
+  preload.on("error", function(event){
+    console.log(event);
+    alert(event.title,event.message);
+  });
+  preload.on("progress", function(event){
+    console.log(event);
+    var pcent = Math.round(event.progress*100).toString() + "%";
+    var progressBar = $(".progress-bar");
+    progressBar.css("width", pcent);
+    $(".progress").text(pcent);
+  });
+  preload.loadManifest([
+    {id: "shot", src: "shot.mp3"},
+    {id: "shotw", src: "shot.wav"}
+  ]);
   
-  init();
+  
   
   window.addEventListener("gamepadconnected", function(e) {
     console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",

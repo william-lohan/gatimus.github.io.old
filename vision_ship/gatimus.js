@@ -25,20 +25,24 @@ Gatimus.prototype.move = function(up, left, down, right){
 Gatimus.prototype.update = function(delta){
   
   if(Key.isDown(32)){
+    
     switch (this.power) {
       case "normal" :
             if(!this.wasFire){
               stage.addChild(new Round(this.x+52, this.y+28));
+              createjs.Sound.play("shot").pan = this.x/320-1;
             }
         break;
       case "repeat" :
         stage.addChild(new Round(this.x+52, this.y+28));
+        createjs.Sound.play("shot");
         break;
       case "spread" :
             if(!this.wasFire){
               stage.addChild(new Round(this.x+52, this.y+28, 0));
               stage.addChild(new Round(this.x+52, this.y+28, 1));
               stage.addChild(new Round(this.x+52, this.y+28, 2));
+              createjs.Sound.play("shot");
             }
         break;
     }

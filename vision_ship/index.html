@@ -6,7 +6,7 @@
   
   <meta charset="utf-8">
   
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -24,6 +24,10 @@
     <div id="help" onclick="help(true);"><i class="fa fa-question-circle"></i></div>
     <div id="overlay"></div>
     <div id="pause">PAUSED</div>
+    <div class="progress-container">
+      <span class="progress"></span>
+      <div class="progress-bar" role="progressbar" style="width: 0%;"></div>
+    </div>
     <div class="modal" id="help_dialog" onmousedown="moveWindow = true;" onmouseup="moveWindow = false;">
       <div class="modal-title">Help</div>
       <div class="modal-close" onclick="help(false);"><i class="fa fa-times"></i></div>
