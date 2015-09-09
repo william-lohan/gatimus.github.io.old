@@ -37,6 +37,10 @@ var Key = {
 
 
 $( document ).ready(function() {
+  
+  var preload = new createjs.LoadQueue(true, "./assets/");
+  preload.installPlugin(createjs.Sound);
+  
   init();
   
   window.addEventListener("gamepadconnected", function(e) {
