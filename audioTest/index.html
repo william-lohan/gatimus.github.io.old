@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  
+  <link rel="stylesheet/less" type="text/css" href="style.less" />
+  <link rel="stylesheet" href="./css/waveform.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
+</head>
+<body>
+  
+  <div id="synth">
+    
+
+  
+    <table>
+    <caption>Oscillator</caption>
+    <tr>
+      <td><input type="radio" name="waveform" value="sine" class="icon-sine" id="sine" checked /></td>
+      <td><lable for="sine">Sine</lable></td>
+    </tr>
+    <tr>
+      <td><input type="radio" name="waveform" value="square" class="icon-square" id="square" /></td>
+      <td><lable for="square">Square</lable></td>
+    </tr>
+    <tr>
+      <td><input type="radio" name="waveform" value="triangle" class="icon-triangle" id="triangle" /></td>
+      <td><lable for="triangle">Triangle</lable></td>
+    </tr>
+    <tr>
+      <td><input type="radio" name="waveform" value="sawtooth" class="icon-sawtooth" id="sawtooth" /></td>
+      <td><lable for="sawtooth">Sawtooth</lable></td>
+    </tr>
+  </table>
+  
+  
+  <table>
+    <caption>Envelope</caption>
+    <tr>
+      <td>A</td>
+      <td><input id="attack" type="range" min="0" max="1000" /></td>
+    </tr>
+    <tr>
+      <td>D</td>
+      <td><input id="decay" type="range" min="0" max="1000" /></td>
+    </tr>
+    <tr>
+      <td>S</td>
+      <td><input id="sustain" type="range" min="0" max="1000" /></td>
+    </tr>
+    <tr>
+      <td>R</td>
+      <td><input id="release" type="range" min="0" max="1000" /></td>
+    </tr>
+  </table>
+  
+  <div id="kb"></div>
+ </div>
+
+  
+  <script src="synth.js"></script>
+  <script src="voice.js"></script>
+  <script src="qwerty-hancock.min.js"></script>
+</body>
+</html>
