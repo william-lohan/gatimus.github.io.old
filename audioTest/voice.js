@@ -27,7 +27,7 @@ Voice.prototype.noteOn = function(note, hz){
   this.osc.get(note).connect(this.envelope.get(note));
   
   this.osc.get(note).start(0);
-}
+};
 
 Voice.prototype.noteOff = function(note){
   this.keys.set(note, false);
@@ -39,7 +39,7 @@ Voice.prototype.noteOff = function(note){
     	context.osc.get(note).disconnect(context.envelope.get(note));
     	context.envelope.get(note).disconnect(context.audioContext.destination);
     }
-  }
+  };
   window.setTimeout(
     kill,
     this.release,
@@ -47,9 +47,9 @@ Voice.prototype.noteOff = function(note){
     note
   );
   
-}
+};
 
 Voice.prototype.playNote = function(hz, duration){
   this.noteOn(hz);
   window.setTimeout(this.noteOff, duration);
-}
+};

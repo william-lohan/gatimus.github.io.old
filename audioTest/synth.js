@@ -1,9 +1,12 @@
 var voice;
 var kb;
+var midi;
 
 window.onload = function() {
 
-  voice = new Voice(new window.AudioContext(),"square",100,500,500,500);
+  voice = new Voice(new window.AudioContext(),"square",100,200,500,100);
+  
+  midi = new MIDI(navigator);
    
   kb = new QwertyHancock({id: "kb",
                  width: 1200,
@@ -21,11 +24,11 @@ window.onload = function() {
     voice.release = document.getElementById("release").value;
     voice.shape =document.querySelector('input[name="waveform"]:checked').value;
     voice.noteOn(note, frequency);
-  }
+  };
   
   kb.keyUp = function (note, frequency) {
     voice.noteOff(note);
-  }
+  };
 
 };
 
