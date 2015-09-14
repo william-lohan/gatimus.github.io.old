@@ -1,4 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 @import "theme";
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
 
 table {
   display: inline-block;
@@ -14,8 +19,14 @@ caption {
     text-align: center;
 }
 
+.input-appearance {
+     -moz-appearance: none;
+  -webkit-appearance: none;
+          appearance: none;
+}
+
 input[type=radio] {
-    -webkit-appearance: none;
+  .input-appearance();
   color: @accent;
 }
 
@@ -25,10 +36,11 @@ input[type=radio]:focus {
 
 input[type=radio]:checked {
     color: @light;
+    transition:color 0.4s linear;
 }
 
 input[type=range] {
-    -webkit-appearance: none;
+    .input-appearance();
     background-color: @accent;
     width: 200px;
     height:20px;
