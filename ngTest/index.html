@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="test2">
+<head>
+  <title>test2</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!--stylesheets-->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="styles.css">
+<head>
+
+<body layout="row" ng-controller="bodyCtrl">
+  <md-sidenav md-component-id="left" class="md-sidenav-left md-whiteframe-z5" md-is-locked-open="$mdMedia('gt-md')" md-swipe-left="onSwipeLeft()">
+    <div ng-include="'sidenav.html'"></div>
+  </md-sidenav>
+  
+  <md-content layout="column" layout-fill>
+  
+  <main ng-controller="mainCtrl">
+  <header ng-controller="navCtrl">
+    <md-toolbar class="md-whiteframe-z5">
+      <div class="md-toolbar-tools">
+        <md-button ng-click="openLeftMenu()" hide-gt-md><i class="fa fa-bars"></i></md-button>
+        <span>My App's Title</span>
+        <!-- fill up the space between left and right area -->
+        <span flex></span>
+        <i class="fa fa-plus" ng-click="new()"></i>
+        <i class="fa fa-cog" ng-click="setup()"></i>
+      </div>
+    </md-toolbar>
+  </header>
+  <div ng-include="page">
+    
+  </div>
+  <!--<md-content layout-padding style="height: 460px;padding: 24px;">
+    <md-input-container>
+      <label>Name</label>
+      <input ng-model="name">
+    </md-input-container>
+   	<h1>Hello {{name}}</h1>
+   	<div ng-controller="APICtrl">
+   	  <md-list>
+   	    <md-list-item class="md-2-line" ng-repeat="x in names | orderBy : 'id'">
+   	      <img ng-src="{{x.image_url}}" />
+   	      <div class="md-list-item-text">
+     	      <h3>{{x.name}}</h3>
+    	      <p>{{x.genre}}</p>
+   	      </div>
+   	    </md-list-item>
+   	  </md-list>
+    </div>
+    </md-content>-->
+  
+ 	<footer ng-controller="footerCtrl">
+ 	  <hr>
+ 	  <p>Copyright <i class="fa fa-copyright"></i> {{year}} Gatimus</p>
+ 	</footer>
+ 	</main>
+ 	</md-content>
+  <!--scripts-->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+  <script src="main.js"></script>
+  <script src="customers.js"></script>
+</body>
+</html>

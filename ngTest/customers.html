@@ -1,0 +1,22 @@
+<md-content layout-padding ng-controller="custCtrl" ng-init="order='CustID';">
+  <header>
+    <h1>Customers {{test}}</h1>
+  </header>
+  <table>
+    <tr>
+      <th ng-click="order='firstname'">First Name</th>
+      <th ng-click="order='lastname'">Last Name</th>
+      <th ng-click="order='companyname'">Company Name</th>
+      <th ng-click="order='phone'">Phone</th>
+    </tr>
+    <tr ng-repeat="x in customers | orderBy : order">
+      <td>{{x.firstname}}</td>
+      <td>{{x.lastname}}</td>
+      <td>{{x.companyname}}</td>
+      <td>{{x.phone}}</td>
+      <td><i class="fa fa-pencil"></i></td>
+      <td ng-click="viewCust($event, x)"><i class="fa fa-eye"></i></td>
+    </tr>
+  </table>
+  
+</md-content>

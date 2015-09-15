@@ -1,0 +1,23 @@
+body {
+
+}
+
+nav {
+
+}
+
+md-list-item i {
+  padding: 10px;
+}
+
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+footer {
+  text-align: center;
+}
+

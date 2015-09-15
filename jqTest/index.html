@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  
+  <title>title</title>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="jquery.ui.theme.css">
+  <!--<link rel="stylesheet" href="jquery.ui.theme.font-awesome.css">-->
+  <link rel="stylesheet" href="styles.css">
+  
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="jquery-ui.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="main.js"></script>
+
+</head>
+
+<body class="container">
+  
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+          <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand" href="#"><img src="http://autorepairsoftware.com/Portals/0/AutoFluent.png" style="width:158px; height:38px; "></a>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+          <li><a id="menu_sales"><i class="fa fa-usd"></i> Sales</a></li>
+          <li><a href="#"><i class="fa fa-barcode"></i> Inventory</a></li>
+          <li><a href="#"><i class="fa fa-users"></i> Customers</a></li>
+          <li><a href="#"><i class="fa fa-briefcase"></i> Vendors</a></li>
+          <li><a href="#"><i class="fa fa-cog"></i> Setup</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <h1>header</h1>
+  </header>
+  
+  <main>
+    <p>main</p>
+
+  </main>
+  
+  <footer>
+    <hr>
+    <p>Copyright &copy; <span id="year"></span> Gatimus</p>
+  </footer>
+  
+  <div id="sales_entry" class="dialog_window container" title="Sales Entry">
+    <form class="form-inline">
+      <button type="button" class="btn btn-primary" id="new"><i class="fa fa-plus"></i> New</button>
+    </form>
+  </div>
+  
+  <div id="invoicing" class="dialog_window container" title="Invoicing">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="referred_by" class="control-label">Referred by</label>
+        <select class="form-control" id="referred_by">
+          <option>Friend</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  
+</body>
+</html>

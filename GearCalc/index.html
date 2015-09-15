@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>GearCalc</title>
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.1/angular-material.min.css">
+  <link rel="stylesheet" href="styles.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.1/angular-material.min.js"></script>
+  
+</head>
+
+<body ng-app="gearCalc" ng-controller="main" layout-margin>
+
+  <div flex class="md-whiteframe-z5">
+  
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span>Engine</span>
+      </div>
+    </md-toolbar>
+    
+    <md-content layout-padding>
+      <div layout>
+        <md-input-container flex="10">
+          <label>RPM</label>
+          <input type="number" ng-model="rpm">
+        </md-input-container>
+        <md-slider flex ng-model="rpm" min="0" max="10000" aria-label="RPM"></md-slider>
+      </div>
+      <div layout layout-align="center center">
+        <md-button class="md-raised" ng-click="idle()">Idle</md-button>
+      </div>
+    </md-content>
+    
+  </div>
+  
+  <div flex class="md-whiteframe-z5">
+    
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span>Transmission</span>
+      </div>
+    </md-toolbar>
+    
+    <md-content layout-padding>
+      <p>Select Gear</p>
+      <md-radio-group layout="row" ng-model="gear">
+        <md-radio-button ng-repeat="d in gears" ng-value="d.gear" >
+          <md-input-container>
+            <label>{{d.gear}}</label>
+            <input type="number" ng-model="d.ratio">
+          </md-input-container>
+        </md-radio-button>
+      </md-radio-group>
+      <div layout layout-align="center center">
+        <md-button class="md-raised" ng-click="addGear()">Add Gear</md-button>
+        <md-button class="md-raised" ng-click="removeGear()">Remove Gear</md-button>
+      </div>
+    </md-content>
+    
+  </div>
+  
+  <div flex class="md-whiteframe-z5">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span>Transfer Case</span>
+      </div>
+    </md-toolbar>
+    <md-content layout-padding>
+      <md-switch ng-model="isLow">
+        <md-input-container>
+          <label>Low Range</label>
+          <input type="number" ng-model="lowRange">
+        </md-input-container>
+      </md-switch>
+    </md-content>
+  </div>
+  
+  <div flex class="md-whiteframe-z5">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span>Axle</span>
+      </div>
+    </md-toolbar>
+    <md-content layout-padding>
+      <md-input-container>
+        <label>Gear Ratio</label>
+        <input type="number" ng-model="axleGear">
+      </md-input-container>
+    </md-content>
+  </div>
+
+    <div flex class="md-whiteframe-z5">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span>Final Drive</span>
+      </div>
+    </md-toolbar>
+    <md-content layout-padding>
+      <output>{{gears[gear-1].ratio * lowRange * axleGear}}</output>
+    </md-content>
+  </div>
+  
+  <script src="main.js"></script> 
+</body>
+</html>
