@@ -1,11 +1,12 @@
-function Voice(audioContext, shape, attack, decay, sustain, release){
-  this.audioContext = new window.AudioContext();
+function Voice(context, shape, attack, decay, sustain, release){
+  this.audioContext = context;
   this.shape = shape;
   this.attack = attack;
   this.decay = decay;
   this.sustain = sustain;
   this.release = release;
-  this.envelope = new Map();
+  this.envelope = this.audioContext.createGain();
+  this.envelope.connect(this.audioContext.destination);
   this.osc = new Map();
   this.keys = new Map();
   var notes= [];
@@ -16,26 +17,36 @@ function Voice(audioContext, shape, attack, decay, sustain, release){
 }
 
 Voice.prototype.noteOn = function(note, hz){
-  console.log(this.attack,this.decay,this.sustain,this.release, note, hz);
+  console.log(this);
   this.keys.set(note, true);
-  this.envelope.set(note, this.audioContext.createGain());
+  //this.envelope.set(note, this.audioContext.createGain());
   this.osc.set(note, this.audioContext.createOscillator());
   var now = this.audioContext.currentTime;
   
+  this.envelope.gain.setValueAtTime(0, now); //start
+  this.envelope.gain.linearRampToValueAtTime(1, now + this.attack / 1000); //attack
+  this.envelope.gain.linearRampToValueAtTime(this.sustain / 1000, now + this.decay / 1000); //decay
+  /*
   this.envelope.get(note).connect(this.audioContext.destination);
   this.envelope.get(note).gain.setValueAtTime(0, now); //start
   this.envelope.get(note).gain.linearRampToValueAtTime(1, now + this.attack / 1000); //attack
   this.envelope.get(note).gain.linearRampToValueAtTime(this.sustain / 1000, now + this.decay / 1000); //decay
-  
+  */
   this.osc.get(note).frequency.value = hz;
   this.osc.get(note).type = this.shape;
-  this.osc.get(note).connect(this.envelope.get(note));
+  this.osc.get(note).connect(this.envelope);
   
   this.osc.get(note).start(0);
 };
 
 Voice.prototype.noteOff = function(note){
   this.keys.set(note, false);
+  
+  this.osc.get(note).stop(0);
+  this.osc.get(note).disconnect(this.envelope);
+  //this.envelope.get(note).disconnect(context.audioContext.destination);
+  
+  /* keep this
   var now = this.audioContext.currentTime;
   this.envelope.get(note).gain.linearRampToValueAtTime(0, now + this.release / 1000);//release
   var kill = function(context, note){
@@ -51,6 +62,7 @@ Voice.prototype.noteOff = function(note){
     this,
     note
   );
+  */
   
 };
 
