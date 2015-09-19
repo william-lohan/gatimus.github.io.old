@@ -8,10 +8,15 @@ function Voice(audioContext, shape, attack, decay, sustain, release){
   this.envelope = new Map();
   this.osc = new Map();
   this.keys = new Map();
+  var notes= [];
+  var a = 440; // a is 440 hz...
+  for (var x = 0; x < 127; ++x){
+     notes[x] = a * Math.pow(2, (x - 69.0) / 12.0);
+  }
 }
 
 Voice.prototype.noteOn = function(note, hz){
-  console.log(this.attack,this.decay,this.sustain,this.release);
+  console.log(this.attack,this.decay,this.sustain,this.release, note, hz);
   this.keys.set(note, true);
   this.envelope.set(note, this.audioContext.createGain());
   this.osc.set(note, this.audioContext.createOscillator());
