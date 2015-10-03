@@ -1,0 +1,9 @@
+{
+	level: 0,
+	events: [
+		{
+			ticks: 0,
+			somthing: 0//show title screen
+		}
+	]
+}

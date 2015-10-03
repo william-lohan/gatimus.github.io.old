@@ -1,0 +1,17 @@
+{
+	level: 1,
+	events: [
+		{
+			ticks: 0,
+			somthing: 0//init player
+		},
+		{
+			ticks: 100,
+			somthing: 0//spawn enemy
+		},
+		{
+			ticks: 200,
+			somthing: 0//boss fight
+		}
+	]
+}
