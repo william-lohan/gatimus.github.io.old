@@ -3,7 +3,10 @@ function Gatimus() {
     images: ["vision_ship.png"],
     frames: {width:64, height:64, count:3},
     animations: {
-      run:[0,2]
+      run:{
+        frames: [0,1,2],
+        speed: 0.3
+      }
     }
   };
   var spriteSheet = new createjs.SpriteSheet(data);
@@ -23,7 +26,8 @@ Gatimus.prototype.move = function(up, left, down, right){
 };
 
 Gatimus.prototype.update = function(delta){
-  
+  //console.log(delta);
+  /*
   if(Key.isDown(32)){
     
     switch (this.power) {
@@ -77,5 +81,5 @@ Gatimus.prototype.update = function(delta){
     this.charged = false;
     this.wasCharge = false;
   }
-  
+  */
 };

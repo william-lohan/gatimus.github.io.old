@@ -11,7 +11,7 @@ function Game(canvas, hud, fps, speed) {
 	//hud
 	createjs.Ticker.framerate = fps;
 	this.baseSpeed = (20/fps)*speed;
-	this.level = new Level(canvas, {});
+	this.level = new Level(canvas, "levels/level1.json");
 	/*
 	createjs.Ticker.addEventListener("tick", function(event){
 		console.log(this.level);
@@ -26,8 +26,8 @@ function Game(canvas, hud, fps, speed) {
  * @pram {Object} event
  */
 Game.prototype.loop = function(event){
-	var level = this.level;
-	console.log(level);
+	//var level = this.level;
+	//console.log(level);
 	if(!event.paused){
 		var speed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
 		//read input
@@ -35,7 +35,7 @@ Game.prototype.loop = function(event){
 	} else {
 		//
 	}
-	console.log('Game Loop');
+	//console.log('Game Loop');
 };
 
 

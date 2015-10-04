@@ -2,11 +2,15 @@
  * --
  * @class Level
  * @pram {HTMLCanvasElement | String | Object} canvas
- * @pram {Object} levelData 
+ * @pram {String | Object} levelData 
  */
 function Level(canvas, levelData) {
-	this.levelData = levelData;
 	createjs.Stage.call(this, canvas);
+	if(typeof levelData == "string"){
+		$.getJSON(levelData, function(data){
+			console.log(data);
+		});
+	}
 
 	//following code will be replaced by parsing levelData and generating level
 	//var bg1, bg2, bg3, bg1e, bg2e, bg3e;
@@ -49,7 +53,8 @@ function Level(canvas, levelData) {
 
 	this.animation = new Gatimus();
 
-	createjs.Stage.prototype.addChild.call(this,this.bg1, this.bg2, this.bg3, this.bg1e, this.bg2e, this.bg3e, this.animation);
+	
+	this.addChild(this.bg1, this.bg2, this.bg3, this.bg1e, this.bg2e, this.bg3e, this.animation);
 	//---
 	console.log('New Level: ' + this);
 }
@@ -83,6 +88,14 @@ Level.prototype.update = function(speed){
     }
     this.bg3e.x = this.bg3.x+1280;
 	//
+
+	for (var i = 0; i < this.children.length; i++) {
+		if(this.children[i].update){
+			this.children[i].update(speed);
+		}
+	};
+
+
 	createjs.Stage.prototype.update.call(this);//call super
-	console.log('Update Level');
+	//console.log('Update Level');
 };
