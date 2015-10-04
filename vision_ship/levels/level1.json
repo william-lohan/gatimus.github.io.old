@@ -2,8 +2,19 @@
 	level: 1,
 	events: [
 		{
-			ticks: 0,
-			somthing: 0//init player
+			event: 'SPAWN', //what
+			ticks: 0, //when
+			data: {
+				type: 'BG',
+				sprite_sheet: {
+					images: ["bg1.png"],
+					frames: {width:1280, height:480, count:1},
+					animations: {bg1: 0}
+				},
+				onTick: function(speed) {
+					//natural movment
+				}
+			} //entity
 		},
 		{
 			ticks: 100,
@@ -13,5 +24,6 @@
 			ticks: 200,
 			somthing: 0//boss fight
 		}
-	]
+	],
+	next: 'level2.json'
 }

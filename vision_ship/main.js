@@ -1,4 +1,8 @@
 
+//new
+var game;
+//
+
 var stage;
 var bg1, bg2, bg3, bg1e, bg2e, bg3e;
 var shape;
@@ -37,7 +41,7 @@ var Key = {
 
 
 $( document ).ready(function() {
-  
+  /*
   var preload = new createjs.LoadQueue(true, "./assets/");
   preload.installPlugin(createjs.Sound);
   preload.on("complete", function(event){
@@ -59,7 +63,8 @@ $( document ).ready(function() {
   preload.loadManifest([
     {id: "shot", src: "shot.mp3"},
     {id: "shotw", src: "shot.wav"}
-  ]);
+  ]);*/
+  init();
   
   
   
@@ -77,8 +82,16 @@ $( document ).ready(function() {
 });
 
 function init() {
+
+  game = new Game("gameCanvas", {}, 20, 10);
+  createjs.Ticker.addEventListener("tick", function(event){
+    game.loop(event);
+  });
+
+
+  /*
   
-  stage = new createjs.Stage("demoCanvas");
+  stage = new createjs.Stage("gameCanvas");
   
 
   var bg1Sprite = new createjs.SpriteSheet({
@@ -121,7 +134,7 @@ function init() {
   animation = new Gatimus();
   
   
-  stage = new createjs.Stage("demoCanvas");
+  stage = new createjs.Stage("gameCanvas");
   stage.addChild(bg1, bg2, bg3, bg1e, bg2e, bg3e, animation);
   
 
@@ -148,6 +161,7 @@ function init() {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
   });
+*/
 
 				
   
