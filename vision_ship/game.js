@@ -3,21 +3,14 @@
  * @class Game
  * @pram {HTMLCanvasElement | String | Object} canvas
  * @pram {Object} hud
- * @pram {number} fps
- * @pram {number} speed
+ * @pram {Number} fps
+ * @pram {Number} speed
  */
 function Game(canvas, hud, fps, speed) {
 	this.canvas = canvas;
 	//hud
 	createjs.Ticker.framerate = fps;
 	this.baseSpeed = (20/fps)*speed;
-	this.level = new Level(canvas, "levels/level1.json");
-	/*
-	createjs.Ticker.addEventListener("tick", function(event){
-		console.log(this.level);
-	});
-	*/
-	console.log('New Game: ' + this.level);
 }
 
 /**
@@ -26,12 +19,16 @@ function Game(canvas, hud, fps, speed) {
  * @pram {Object} event
  */
 Game.prototype.loop = function(event){
-	//var level = this.level;
-	//console.log(level);
 	if(!event.paused){
 		var speed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
-		//read input
-		this.level.update(speed);
+		var playerCommands = input.handleInput();
+		if(this.level){
+			for (var i = 0; i < playerCommands.length; i++) {
+				playerCommands[i].execute(this.level.getChildByName("PLAYER"));
+			};
+			this.level.update(speed);
+		}
+		
 	} else {
 		//
 	}
@@ -49,4 +46,32 @@ Game.prototype.setPaused = function(paused) {
 	//
 };
 
-//Game.prototype.constructor = Game;
+/**
+ * --
+ * @class Game
+ * @pram {String} levelURL
+ */
+Game.prototype.loadLevel = function(levelURL, callBack) {
+	/*
+	var request = new XMLHttpRequest();
+	request.addEventListener("load", function(event){
+		console.log(request.responseText);
+		var levelData = JSON.parse(JSON.stringify(request.response));
+		console.log(levelData.events);
+	});
+	request.open("GET", levelURL);
+	request.send();
+	*/
+	
+	$.getJSON(levelURL, null, function(data, textStatus, jqXHR) {
+		callBack(data);
+	});
+	
+	/*
+	var preload = new createjs.LoadQueue();
+	preload.addEventListener("fileload", function(event){
+		console.log(event);
+	});
+	preload.loadFile(levelURL);
+	*/
+};

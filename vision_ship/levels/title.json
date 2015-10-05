@@ -1,10 +1,7 @@
 {
-	level: 0,
-	events: [
-		{
-			ticks: 0,
-			somthing: 0//show title screen
-		}
+	"level": 0,
+	"events": [
+		{}
 	],
-	next: 'level1.json'
+	"next": "level1.json"
 }

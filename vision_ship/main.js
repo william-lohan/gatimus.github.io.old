@@ -1,7 +1,8 @@
 
-//new
 var game;
-//
+var input;
+
+
 
 var stage;
 var bg1, bg2, bg3, bg1e, bg2e, bg3e;
@@ -13,31 +14,7 @@ var moveWindow = false;
 var score = 0;
 var highScore = 0;
 
-var mouse = {
-  x: 0,
-  y: 0
-};
 
-var Key = {
-  pressed: {},
-
-  LEFT: 37 || 65,
-  UP: 38|| 87,
-  RIGHT: 39 || 68,
-  DOWN: 40 || 83,
-  
-  isDown: function(keyCode) {
-    return this.pressed[keyCode];
-  },
-  
-  onKeydown: function(event) {
-    this.pressed[event.keyCode] = true;
-  },
-  
-  onKeyup: function(event) {
-    delete this.pressed[event.keyCode];
-  }
-};
 
 
 $( document ).ready(function() {
@@ -63,88 +40,42 @@ $( document ).ready(function() {
   preload.loadManifest([
     {id: "shot", src: "shot.mp3"},
     {id: "shotw", src: "shot.wav"}
-  ]);*/
+  ]);
+*/
   init();
-  
-  
-  
-  window.addEventListener("gamepadconnected", function(e) {
-    console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
-      e.gamepad.index, e.gamepad.id,
-      e.gamepad.buttons.length, e.gamepad.axes.length);
-  });
-  
-  window.addEventListener("gamepaddisconnected", function(e) {
-    console.log("Gamepad disconnected from index %d: %s",
-      e.gamepad.index, e.gamepad.id);
-  });
-  
 });
 
 function init() {
 
+  input = new Input();
+  $(document).keydown(function(event){
+    input.onKeyDown(event);
+  });
+  $(document).keyup(function(event){
+    input.onKeyUp(event);
+  });
+  $(document).mousemove(function(event){
+    input.onMouseMove(event);
+  });
+  window.addEventListener("gamepadconnected", function(event){
+    input.gamePadConnected(event);
+  });
+  window.addEventListener("gamepaddisconnected", function(event){
+    input.gamePadDisconnected(event);
+  });
+
+  var next = "./levels/level1.json";
   game = new Game("gameCanvas", {}, 20, 10);
   createjs.Ticker.addEventListener("tick", function(event){
     game.loop(event);
   });
+  game.loadLevel(next, function(data){
+    next = data.next;
+    game.level = new Level(game.canvas, data);
+  });
 
 
   /*
-  
-  stage = new createjs.Stage("gameCanvas");
-  
-
-  var bg1Sprite = new createjs.SpriteSheet({
-    images: ["bg1.png"],
-    frames: {width:1280, height:480, count:1},
-    animations: {
-      bg1: 0
-    }
-  });
-  
-  var bg2Sprite = new createjs.SpriteSheet({
-    images: ["bg2.png"],
-    frames: {width:1280, height:480, count:1},
-    animations: {
-      bg2: 0
-    }
-  });
-  
-  var bg3Sprite = new createjs.SpriteSheet({
-    images: ["bg3.png"],
-    frames: {width:1280, height:480, count:1},
-    animations: {
-      bg3: 0
-    }
-  });
-
-  bg1 = new createjs.Sprite(bg1Sprite, "bg1");
-  bg2 = new createjs.Sprite(bg2Sprite, "bg2");
-  bg3 = new createjs.Sprite(bg3Sprite, "bg3");
-  
-  
-  bg1e = new createjs.Sprite(bg1Sprite, "bg1");
-  bg1e.x = 1280;
-  bg2e = new createjs.Sprite(bg2Sprite, "bg2");
-  bg2e.x = 1280;
-  bg3e = new createjs.Sprite(bg3Sprite, "bg3");
-  bg3e.x = 1280;
-
-
-  animation = new Gatimus();
-  
-  
-  stage = new createjs.Stage("gameCanvas");
-  stage.addChild(bg1, bg2, bg3, bg1e, bg2e, bg3e, animation);
-  
-
-  createjs.Ticker.addEventListener("tick", vBlank);
-  
-  
-  $(document).keydown(function(event){Key.onKeydown(event);});
-  $(document).keyup(function(event){Key.onKeyup(event);});
-  
-  
 	$(document).mousemove(function( event ) {
     //$("#debug").text(event.clientX + "," + event.clientY);
     var moveX = event.clientX - mouse.x;
