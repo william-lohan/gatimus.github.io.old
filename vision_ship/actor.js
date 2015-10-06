@@ -48,10 +48,10 @@ Actor.prototype.update = function(speed) {
 
 	//bounds
 	if(this.data.bounds){
-		if(this.x < this.data.bounds[0]){this.x = this.data.bounds[0]};
-		if(this.y < this.data.bounds[1]){this.y = this.data.bounds[1]};
-		if(this.x > this.data.bounds[2]){this.x = this.data.bounds[2]};
-		if(this.y > this.data.bounds[3]){this.y = this.data.bounds[3]};
+		if(this.x < this.data.bounds[0]){this.x = this.data.bounds[0];}
+		if(this.y < this.data.bounds[1]){this.y = this.data.bounds[1];}
+		if(this.x > this.data.bounds[2]){this.x = this.data.bounds[2];}
+		if(this.y > this.data.bounds[3]){this.y = this.data.bounds[3];}
 	}
 
 };
@@ -65,7 +65,7 @@ Actor.prototype.move = function(x, y) {
 	this.queue.move = true;
 	this.queue.x = x;
 	this.queue.y = y;
-}
+};
 /**
  * --
  * @class Actor
@@ -74,7 +74,7 @@ Actor.prototype.move = function(x, y) {
 Actor.prototype.action = function(code) {
 	this.queue.action = true;
 	this.queue.code = code;
-}
+};
 
 
 /**
@@ -100,6 +100,7 @@ BackGround.prototype.update = function(speed) {
 };
 
 
+//var machina = require('machina');
 /**
  * --
  * @class Ship
@@ -107,7 +108,8 @@ BackGround.prototype.update = function(speed) {
  */
 function Ship(data) {
 	Actor.call(this, data);
-	this.state = new ShipStateIdle(this);
+	this.state = new machina.Fsm(shipState);
+	//this.state = new ShipStateIdle(this);
 }
 Ship.prototype = Object.create(Actor.prototype);
 /**
@@ -118,9 +120,10 @@ Ship.prototype = Object.create(Actor.prototype);
 Ship.prototype.update = function(speed) {
 	Actor.prototype.update.call(this,speed);
 	//
-	if(!this.queue.action){
-		this.state = new ShipStateIdle(this);
-	}
+	//if(!this.queue.action){
+		//this.state = new ShipStateIdle(this);
+	//}
+	this.state.update(this.queue,action);
 	this.queue.action = false;
 };
 /**
@@ -152,7 +155,7 @@ Ship.prototype.action = function(code) {
 			//this.state.fire(this);
 			break;
 	}
-}
+};
 /**
  * --
  * @class Ship
@@ -161,13 +164,100 @@ Ship.prototype.fire = function(){
 	this.data.action_0.data.x = this.x+52;
 	this.data.action_0.data.y = this.y+28;
 	this.parent.spawn(this.data.action_0.data);
-}
+};
+/**
+ * --
+ * @class Ship
+ */
 Ship.prototype.charge = function(){
 	this.data.action_1.data.x = this.x+52;
 	this.data.action_1.data.y = this.y+28;
 	this.parent.spawn(this.data.action_1.data);
-}
+};
 
+var shipState = {
+  initialize: function(data) {
+    //init
+  },
+  namespace: "ship-state",
+  initialState: "idle",
+  states: {
+    idle: {
+      _onEnter: function() {
+        
+      },
+      fire: function(ship) {
+        ship.fire();
+        this.transition(ship, "firing");
+      },
+      charge: function(ship) {
+        ship.charge();
+        this.transition(ship, "charging");
+      },
+      update: function() {
+        
+      },
+      _onExit: function() {
+        
+      }
+    },
+    firing: {
+      _onEnter: function() {
+        
+      },
+      fire: function() {
+        //already
+      },
+      charge: function(ship) {
+        ship.charge();
+        this.transition(ship, "charging");
+      },
+      update: function(still) {
+        if(!still){
+          this.transition(still, "idle");
+        }
+      },
+      _onExit: function() {
+        
+      }
+    },
+    charging:  {
+      _onEnter: function() {
+        
+      },
+      fire: function(ship) {
+        ship.fire();
+        this.transition(ship, "firing");
+      },
+      charge: function(ship) {
+        if(!ship.charge){
+          ship.charge = 0;
+        }
+        ship.charge ++;
+      },
+      update: function(still) {
+        if(!still){
+          this.transition(still, "idle");
+        }
+      },
+      _onExit: function() {
+        
+      }
+    }
+  },
+  fire: function(ship){
+    this.handle(ship,"fire");
+  },
+  charge: function(ship){
+    this.handle(ship,"charge");
+  },
+  update: function(still){
+    this.handle(still,"update");
+  }
+};
+
+
+/*
 function ShipStateIdle(ship){
 	this.ship = ship;
 }
@@ -205,3 +295,4 @@ ShipStateCharging.prototype.charge = function(){
 		//change state to ChargeFiring
 	}
 }
+*/

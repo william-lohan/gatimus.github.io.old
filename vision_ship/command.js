@@ -21,8 +21,8 @@ Command.prototype.execute = function(actor) {
  */
 function Move(x, y){
 	Command.call(this);
-	this.x = x,
-	this.y = y
+	this.x = x;
+	this.y = y;
 }
 Move.prototype = Object.create(Command.prototype);
 /**
