@@ -1,6 +1,6 @@
 //var lodash = require(['lodash'], function(_) {});
 //var machina = require(['machina']);
 
-define( [ "machina" ], function ( machina ) {
-  return machina;
+require(['machina'], function(machina){
+    return machina.Fsm.extend({ /* your stuff */});
 });

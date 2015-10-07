@@ -108,8 +108,9 @@ BackGround.prototype.update = function(speed) {
  */
 function Ship(data) {
 	Actor.call(this, data);
-	this.state = new machina.Fsm(shipState);
+	this.state = new machina.BehavioralFsm(shipState);
 	//this.state = new ShipStateIdle(this);
+	this.queue.action = false;
 }
 Ship.prototype = Object.create(Actor.prototype);
 /**
@@ -123,7 +124,7 @@ Ship.prototype.update = function(speed) {
 	//if(!this.queue.action){
 		//this.state = new ShipStateIdle(this);
 	//}
-	this.state.update(this.queue,action);
+	this.state.update(this);
 	this.queue.action = false;
 };
 /**
@@ -135,10 +136,10 @@ Ship.prototype.action = function(code) {
 	this.queue.action = true;
 	switch(code) {
 		case 0:
-			this.state.fire();
+			this.state.fire(this);
 			break;
 		case 1:
-			this.state.charge();
+			this.state.charge(this);
 			break;
 		case 2:
 			//
@@ -172,7 +173,7 @@ Ship.prototype.fire = function(){
 Ship.prototype.charge = function(){
 	this.data.action_1.data.x = this.x+52;
 	this.data.action_1.data.y = this.y+28;
-	this.parent.spawn(this.data.action_1.data);
+	this.chargeActor = this.parent.spawn(this.data.action_1.data);
 };
 
 var shipState = {
@@ -183,8 +184,11 @@ var shipState = {
   initialState: "idle",
   states: {
     idle: {
-      _onEnter: function() {
-        
+      _onEnter: function(ship) {
+      	if(ship.chargeActor){
+      		ship.parent.removeChild(ship.chargeActor);
+      	}
+        console.log("idle");
       },
       fire: function(ship) {
         ship.fire();
@@ -203,7 +207,7 @@ var shipState = {
     },
     firing: {
       _onEnter: function() {
-        
+        console.log("fire");
       },
       fire: function() {
         //already
@@ -212,9 +216,9 @@ var shipState = {
         ship.charge();
         this.transition(ship, "charging");
       },
-      update: function(still) {
-        if(!still){
-          this.transition(still, "idle");
+      update: function(ship) {
+        if(!ship.queue.action){
+          this.transition(ship, "idle");
         }
       },
       _onExit: function() {
@@ -223,27 +227,47 @@ var shipState = {
     },
     charging:  {
       _onEnter: function() {
-        
+        console.log("charging");
       },
       fire: function(ship) {
         ship.fire();
         this.transition(ship, "firing");
       },
       charge: function(ship) {
-        if(!ship.charge){
-          ship.charge = 0;
+        if(!ship.charge.level){
+          ship.charge.level = 0;
         }
-        ship.charge ++;
+        ship.charge.level ++;
+        if(ship.charge.level>50){
+        	this.transition(ship, "charged");
+        }
+        console.log(ship.charge.level);
       },
-      update: function(still) {
-        if(!still){
-          this.transition(still, "idle");
+      update: function(ship) {
+        if(!ship.queue.action){
+          this.transition(ship, "idle");
         }
       },
-      _onExit: function() {
-        
+      _onExit: function(ship) {
+        ship.charge.level = 0;
+        ship.parent.removeChild(ship.chargeActor);
       }
-    }
+    },
+    charged: {
+		_onEnter: function(ship) {
+			ship.chargeActor.gotoAndPlay("fire");
+			console.log("charged");
+		},
+		update: function(ship) {
+			if(!ship.queue.action){
+				//this.transition(ship, "idle");
+			}
+		},
+		_onExit: function(ship) {
+			ship.charge.level = 0;
+			ship.parent.removeChild(ship.chargeActor);
+		}
+	}
   },
   fire: function(ship){
     this.handle(ship,"fire");
@@ -251,8 +275,8 @@ var shipState = {
   charge: function(ship){
     this.handle(ship,"charge");
   },
-  update: function(still){
-    this.handle(still,"update");
+  update: function(ship){
+    this.handle(ship,"update");
   }
 };
 

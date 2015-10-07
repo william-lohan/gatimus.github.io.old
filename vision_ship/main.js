@@ -1,4 +1,5 @@
 
+var engine;
 var game;
 var input;
 
@@ -42,21 +43,56 @@ $( document ).ready(function() {
     {id: "shotw", src: "shot.wav"}
   ]);
 */
+  var c = document.getElementById("game");
+  var s = 1;
+  if(window.innerWidth < window.innerHeight){
+    s = window.innerWidth/640;
+  } else if(window.innerHeight < window.innerWidth){
+    s = window.innerHeight/480;
+  }
+
+  $("#game").css("transform", "scale(" + s.toString() + ", " + s.toString() + ") translate(30%, 20%)");
+  //$("#game").css("left", "0");
+  //$("#game").css("top", "0");
+  //$("#game").css("transform", "translate(50%, 50%)");
+
+  //c.style.
+  //c.setAttribute('style',"transform: scale(" + s.toString() + ", " + s.toString() + ");");
+  //c.setAttribute('style',"left: 50%; top: 50%; transform: translate(-50%, -50%);");
+
+
+
+
+
   init();
 });
 
 function init() {
 
+
+
+
+
+  game = new Game("gameCanvas", {}, 60, 10);
+
   input = new Input();
-  $(document).keydown(function(event){
+
+  window.addEventListener("keydown", function(event){
     input.onKeyDown(event);
   });
-  $(document).keyup(function(event){
+  window.addEventListener("keyup", function(event){
     input.onKeyUp(event);
   });
-  $(document).mousemove(function(event){
+  window.addEventListener("mousemove", function(event){
     input.onMouseMove(event);
   });
+  window.addEventListener("mousedown", function(event){
+    input.onMouseDown(event);
+  });
+  window.addEventListener("mouseup", function(event){
+    input.onMouseUp(event);
+  });
+
   window.addEventListener("gamepadconnected", function(event){
     input.gamePadConnected(event);
   });
@@ -65,14 +101,18 @@ function init() {
   });
 
   var next = "./levels/level1.json";
-  game = new Game("gameCanvas", {}, 20, 10);
-  createjs.Ticker.addEventListener("tick", function(event){
-    game.loop(event);
-  });
+  
   game.loadLevel(next, function(data){
     next = data.next;
     game.level = new Level(game.canvas, data);
   });
+
+  createjs.Ticker.addEventListener("tick", function(event){
+    game.loop(event, input);
+  });
+
+  //engine = new Engine("gameCanvas", {}, 60);
+  //engine.start();
 
 
   /*

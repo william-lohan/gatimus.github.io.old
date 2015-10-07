@@ -3,7 +3,6 @@
  * @class Game
  * @pram {HTMLCanvasElement | String | Object} canvas
  * @pram {Object} hud
- * @pram {Number} fps
  * @pram {Number} speed
  */
 function Game(canvas, hud, fps, speed) {
@@ -17,8 +16,9 @@ function Game(canvas, hud, fps, speed) {
  * --
  * @class Game
  * @pram {Object} event
+ * @pram {Object} input
  */
-Game.prototype.loop = function(event){
+Game.prototype.loop = function(event, input){
 	if(!event.paused){
 		var speed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
 		var playerCommands = input.handleInput();

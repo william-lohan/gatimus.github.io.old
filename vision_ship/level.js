@@ -59,5 +59,5 @@ Level.prototype.spawn = function(data) {
 		default:
 			entity = new Actor(data);
 	}
-	this.addChild(entity);
+	return this.addChild(entity);
 }
