@@ -69,20 +69,19 @@ $( document ).ready(function() {
 
 function init() {
 
-
-
-
-
   game = new Game("gameCanvas", {}, 60, 10);
 
   input = new Input();
-
+  
+  //Keyboard
   window.addEventListener("keydown", function(event){
     input.onKeyDown(event);
   });
   window.addEventListener("keyup", function(event){
     input.onKeyUp(event);
   });
+  
+  //Mouse
   window.addEventListener("mousemove", function(event){
     input.onMouseMove(event);
   });
@@ -93,6 +92,7 @@ function init() {
     input.onMouseUp(event);
   });
 
+  //GamePad
   window.addEventListener("gamepadconnected", function(event){
     input.gamePadConnected(event);
   });
@@ -100,12 +100,14 @@ function init() {
     input.gamePadDisconnected(event);
   });
 
-  var next = "./levels/level1.json";
+  /*
+  var next = "./levels/title.json";
   
   game.loadLevel(next, function(data){
     next = data.next;
     game.level = new Level(game.canvas, data);
   });
+  */
 
   createjs.Ticker.addEventListener("tick", function(event){
     game.loop(event, input);

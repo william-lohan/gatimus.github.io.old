@@ -11,6 +11,7 @@ function Game(canvas, hud, fps, speed) {
 	createjs.Ticker.framerate = fps;
 	this.baseSpeed = (20/fps)*speed;
 	this.state = new machina.BehavioralFsm(gameState);
+	this.state.transition(this, "title");
 }
 
 /**
@@ -20,19 +21,21 @@ function Game(canvas, hud, fps, speed) {
  * @pram {Object} input
  */
 Game.prototype.loop = function(event, input){
+  var speed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
+  this.state.loop(this, speed, input);
 	if(!event.paused){
-		var speed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
-		var playerCommands = input.handleInput();
+		
+		//var playerCommands = input.handleInput();
 		if(this.level){
-			for (var i = 0; i < playerCommands.length; i++) {
-				playerCommands[i].execute(this.level.getChildByName("PLAYER"));
-			}
+			//for (var i = 0; i < playerCommands.length; i++) {
+				//playerCommands[i].execute(this.level.getChildByName("PLAYER"));
+			//}
 			this.level.update(speed);
 		}
 		
-	} else {
+	}// else {
 		//
-	}
+	//}
 	//console.log('Game Loop');
 };
 
@@ -82,11 +85,38 @@ var gameState = {
     //init
   },
   namespace: "game-state",
-  initialState: "title",
+  initialState: "uninitialized",
   states: {
+    uninitialized: {
+        "*": function(game) {
+            this.deferUntilTransition(game);
+            this.transition(game, "title");
+        }
+    },
     title: {
       _onEnter: function(game){
         console.log("Game State: Title Screen");
+        game.next = "./levels/title.json";
+        
+        game.loadLevel(game.next, function(data){
+          game.next = data.next;
+          game.level = new Level(game.canvas, data);
+        });
+      },
+      loop: function(game, speed, input){
+        //not being called
+        var commands = input.handleInput();
+        for(var i = 0; i < commands.length; i++){
+          console.log(commands[i]);
+          switch(commands[i].code){
+            case "start":
+              this.transition(game, "level");
+              break;
+            default:
+              //default
+              break;
+          }
+        }
       },
       start: function(game){
         this.transition(game, "level");
@@ -98,6 +128,23 @@ var gameState = {
     level: {
       _onEnter: function(game){
         console.log("Game State: Level");
+        game.loadLevel(next, function(data){
+          game.next = data.next;
+          game.level = new Level(game.canvas, data);
+        });
+      },
+      loop: function(game, speed, input){
+        var commands = input.handleInput();
+        for(var i = 0; i < commands.length; i++){
+          if(game.level){
+            
+            commands[i].execute(game.level.getChildByName("PLAYER"));
+            
+			      game.level.update(speed);
+			      
+          }
+        }
+        
       },
       gameOver: function(game){
         this.transition(game, "highScore");
@@ -135,6 +182,9 @@ var gameState = {
         
       }
     }
+  },
+  loop: function(game, speed, input){
+    this.handle(game, speed, input, "loop");
   },
   start: function(game){
     this.handle(game, "start");

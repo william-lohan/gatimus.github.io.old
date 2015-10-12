@@ -1,7 +1,21 @@
 {
 	"level": 0,
 	"events": [
-		{}
+		{
+			"type": "SPAWN",
+			"comment": "title",
+			"ticks": 0,
+			"data": {
+				"type": "title",
+				"sprite_sheet": {
+					"images": ["./assets/title.png"],
+					"frames": {"width":640, "height":480, "count":1},
+					"animations": {"init": 0}
+				},
+				"x": 0,
+				"y": 0
+			} 
+		}
 	],
-	"next": "level1.json"
+	"next": "./levels/level1.json"
 }

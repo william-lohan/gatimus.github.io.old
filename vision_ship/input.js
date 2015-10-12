@@ -173,6 +173,9 @@ Input.prototype.handleInput = function() {
 		} else if(this.keyBoard[KEY.Z]){
 			commands.push(new Action(1));
 		}
+		if(this.keyBoard[KEY.ENTER]){
+		  commands.push(new Action("start"));
+		}
 		
 	}
 	
