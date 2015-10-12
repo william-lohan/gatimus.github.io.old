@@ -30,13 +30,13 @@ Level.prototype.update = function(speed){
 					//default
 			}
 		}
-	};
+	}
 
 	for (var i = 0; i < this.children.length; i++) {
 		if(this.children[i].update){
 			this.children[i].update(speed);
 		}
-	};
+	}
 
 	//console.log(this.children.length);
 
@@ -60,4 +60,4 @@ Level.prototype.spawn = function(data) {
 			entity = new Actor(data);
 	}
 	return this.addChild(entity);
-}
+};

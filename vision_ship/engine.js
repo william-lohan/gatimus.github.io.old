@@ -28,6 +28,6 @@ Engine.prototype.start = function(){
 	createjs.Ticker.addEventListener("tick", function(event){
 		game.loop(event, input);
 	});
-}
+};
 
 

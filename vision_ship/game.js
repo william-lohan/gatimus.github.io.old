@@ -10,6 +10,7 @@ function Game(canvas, hud, fps, speed) {
 	//hud
 	createjs.Ticker.framerate = fps;
 	this.baseSpeed = (20/fps)*speed;
+	this.state = new machina.BehavioralFsm(gameState);
 }
 
 /**
@@ -25,7 +26,7 @@ Game.prototype.loop = function(event, input){
 		if(this.level){
 			for (var i = 0; i < playerCommands.length; i++) {
 				playerCommands[i].execute(this.level.getChildByName("PLAYER"));
-			};
+			}
 			this.level.update(speed);
 		}
 		
@@ -74,4 +75,77 @@ Game.prototype.loadLevel = function(levelURL, callBack) {
 	});
 	preload.loadFile(levelURL);
 	*/
+};
+
+var gameState = {
+  initialize: function(data) {
+    //init
+  },
+  namespace: "game-state",
+  initialState: "title",
+  states: {
+    title: {
+      _onEnter: function(game){
+        console.log("Game State: Title Screen");
+      },
+      start: function(game){
+        this.transition(game, "level");
+      },
+      _onExit: function(game){
+        
+      }
+    },
+    level: {
+      _onEnter: function(game){
+        console.log("Game State: Level");
+      },
+      gameOver: function(game){
+        this.transition(game, "highScore");
+      },
+      pause: function(game){
+        this.transition(game, "paused");
+      },
+      _onExit: function(game){
+        
+      }
+    },
+    paused: {
+      _onEnter: function(game){
+        console.log("Game State: Paused");
+        createjs.Ticker.paused = true;
+      },
+      pause: function(game){
+        this.transition(game, "level");
+      },
+      exit: function(game){
+        this.transition(game, "title");
+      },
+      _onExit: function(game){
+        createjs.Ticker.paused = false;
+      }
+    },
+    highScore: {
+      _onEnter: function(game){
+        console.log("Game State: High Score");
+      },
+      exit: function(game){
+        this.transition(game, "title");
+      },
+      _onExit: function(game){
+        
+      }
+    }
+  },
+  start: function(game){
+    this.handle(game, "start");
+  },
+  pause: function(game){
+    this.handle(game,"pause");
+  },
+  exit: function(game){
+    this.handle(game, "exit");
+  },
+  gameOver: function(game){
+    this.handle(game, "gameOver");
+  }
 };
