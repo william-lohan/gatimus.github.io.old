@@ -21,8 +21,8 @@ function Game(canvas, hud, fps, speed) {
  * @pram {Object} input
  */
 Game.prototype.loop = function(event, input){
-  var speed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
-  this.state.loop(this, speed, input);
+  this.speed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
+  this.state.loop(this);
 	if(!event.paused){
 		
 		//var playerCommands = input.handleInput();
@@ -30,7 +30,7 @@ Game.prototype.loop = function(event, input){
 			//for (var i = 0; i < playerCommands.length; i++) {
 				//playerCommands[i].execute(this.level.getChildByName("PLAYER"));
 			//}
-			this.level.update(speed);
+			this.level.update(this.speed);
 		}
 		
 	}// else {
@@ -103,8 +103,9 @@ var gameState = {
           game.level = new Level(game.canvas, data);
         });
       },
-      loop: function(game, speed, input){
+      loop: function(game){
         //not being called
+        console.log("state loop");
         var commands = input.handleInput();
         for(var i = 0; i < commands.length; i++){
           console.log(commands[i]);
@@ -128,19 +129,20 @@ var gameState = {
     level: {
       _onEnter: function(game){
         console.log("Game State: Level");
-        game.loadLevel(next, function(data){
+        game.loadLevel(game.next, function(data){
           game.next = data.next;
           game.level = new Level(game.canvas, data);
         });
       },
-      loop: function(game, speed, input){
+      loop: function(game){
+    
         var commands = input.handleInput();
         for(var i = 0; i < commands.length; i++){
           if(game.level){
             
             commands[i].execute(game.level.getChildByName("PLAYER"));
             
-			      game.level.update(speed);
+			      game.level.update(game.speed);
 			      
           }
         }
@@ -183,8 +185,8 @@ var gameState = {
       }
     }
   },
-  loop: function(game, speed, input){
-    this.handle(game, speed, input, "loop");
+  loop: function(game){
+    this.handle(game, "loop");
   },
   start: function(game){
     this.handle(game, "start");
