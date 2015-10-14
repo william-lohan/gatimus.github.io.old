@@ -1,6 +1,8 @@
 #Vision Ship
 Attempt at 16/8-bit style, side-scrolling, space shooter.
 
+[http://gatimus.github.io/vision_ship/index.html](http://gatimus.github.io/vision_ship/index.html)
+
 Uses [CreateJS](http://www.createjs.com) to work with a HTML5 canvas and [Machina.js](http://machina-js.org) for various state machines.
 
 #To-do
