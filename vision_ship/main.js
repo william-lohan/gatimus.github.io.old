@@ -43,6 +43,8 @@ $( document ).ready(function() {
     {id: "shotw", src: "shot.wav"}
   ]);
 */
+
+/*full screen?
   var c = document.getElementById("game");
   var s = 1;
   if(window.innerWidth < window.innerHeight){
@@ -50,6 +52,7 @@ $( document ).ready(function() {
   } else if(window.innerHeight < window.innerWidth){
     s = window.innerHeight/480;
   }
+  
 
   $("#game").css("transform", "scale(" + s.toString() + ", " + s.toString() + ") translate(30%, 20%)");
   //$("#game").css("left", "0");
@@ -59,6 +62,7 @@ $( document ).ready(function() {
   //c.style.
   //c.setAttribute('style',"transform: scale(" + s.toString() + ", " + s.toString() + ");");
   //c.setAttribute('style',"left: 50%; top: 50%; transform: translate(-50%, -50%);");
+  */
 
 
 
