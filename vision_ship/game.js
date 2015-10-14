@@ -10,6 +10,7 @@ function Game(canvas, hud, fps, speed) {
 	//hud
 	createjs.Ticker.framerate = fps;
 	this.baseSpeed = (20/fps)*speed;
+	this.adjustedSpeed = this.baseSpeed;
 	this.state = new machina.BehavioralFsm(gameState);
 	this.state.transition(this, "title");
 }
@@ -21,21 +22,21 @@ function Game(canvas, hud, fps, speed) {
  * @pram {Object} input
  */
 Game.prototype.loop = function(event, input){
-  this.speed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
+  this.adjustedSpeed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
   this.state.loop(this);
 	if(!event.paused){
 		
 		//var playerCommands = input.handleInput();
-		if(this.level){
+		//(this.level){
 			//for (var i = 0; i < playerCommands.length; i++) {
 				//playerCommands[i].execute(this.level.getChildByName("PLAYER"));
 			//}
-			this.level.update(this.speed);
-		}
+			//this.level.update(this.speed);
+		//}
 		
-	}// else {
+	//}// else {
 		//
-	//}
+	}
 	//console.log('Game Loop');
 };
 
@@ -118,6 +119,9 @@ var gameState = {
               break;
           }
         }
+        if(game.level){
+          game.level.update(game.adjustedSpeed);
+        }
       },
       start: function(game){
         this.transition(game, "level");
@@ -141,10 +145,12 @@ var gameState = {
           if(game.level){
             
             commands[i].execute(game.level.getChildByName("PLAYER"));
-            
-			      game.level.update(game.speed);
+
 			      
           }
+        }
+        if(game.level){
+          game.level.update(game.adjustedSpeed);
         }
         
       },
