@@ -24,7 +24,7 @@ var args = new (function (sSearch) {
   }
 })(window.location.search);
 
-alert(args);
+console.log(args);
 
 
 $( document ).ready(function() {
