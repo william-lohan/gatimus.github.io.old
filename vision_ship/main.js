@@ -15,16 +15,7 @@ var moveWindow = false;
 var score = 0;
 var highScore = 0;
 
-var args = new (function (sSearch) {
-  if (sSearch.length > 1) {
-    for (var aItKey, nKeyId = 0, aCouples = sSearch.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
-      aItKey = aCouples[nKeyId].split("=");
-      this[decodeURIComponent(aItKey[0])] = aItKey.length > 1 ? decodeURIComponent(aItKey[1]) : "";
-    }
-  }
-})(window.location.search);
 
-console.log(args);
 
 
 $( document ).ready(function() {
@@ -76,13 +67,37 @@ $( document ).ready(function() {
 
 
 
-
-  init();
+  var args = new (function (search) {
+    if (search.length > 1) {
+      for (var aItKey, nKeyId = 0, aCouples = search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
+        aItKey = aCouples[nKeyId].split("=");
+        if(aItKey.length > 1){
+          var arg = decodeURIComponent(aItKey[1]);
+          this[decodeURIComponent(aItKey[0])] = isNaN(arg) ? arg : parseInt(arg);
+        } else {
+          this[decodeURIComponent(aItKey[0])] = true;
+        }
+      }
+    }
+  })(window.location.search);
+  console.log(args);
+  
+  init(args);
 });
 
-function init() {
+function init(args) {
+  
+  //var debug = typeof args.debug == "undefined" ? false : args.debug;
+  //var fps = typeof args.fps == "undefined" ? 60 : args.fps;
+  //var speed = typeof args.speed == "undefined" ? 10 : args.speed;
+  //var level = typeof args.level == "undefined" ? 0 : args.level;
+  
+  var debug = args.debug || false;
+  var fps = args.fps || 60;
+  var speed = args.speed || 10;
+  var level = args.level || 0;
 
-  game = new Game("gameCanvas", {}, 60, 10);
+  game = new Game("gameCanvas", {}, fps, speed);
 
   input = new Input();
   
