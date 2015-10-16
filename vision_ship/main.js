@@ -15,7 +15,16 @@ var moveWindow = false;
 var score = 0;
 var highScore = 0;
 
+var args = new (function (sSearch) {
+  if (sSearch.length > 1) {
+    for (var aItKey, nKeyId = 0, aCouples = sSearch.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
+      aItKey = aCouples[nKeyId].split("=");
+      this[decodeURIComponent(aItKey[0])] = aItKey.length > 1 ? decodeURIComponent(aItKey[1]) : "";
+    }
+  }
+})(window.location.search);
 
+alert(args);
 
 
 $( document ).ready(function() {
