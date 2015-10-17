@@ -60,9 +60,23 @@
   <div id="debug">0, 0</div>
   <div id="game">
     <canvas id="gameCanvas" width="640" height="480"></canvas>
-    <div id="score">SCORE: <span id="score_value">0</span></div>
-    <div id="high_score">HIGH SCORE: <span id="high_score_value">-</span></div>
-    <div id="help" onclick="help(true);"><i class="fa fa-question-circle"></i></div>
+    <div id="title-text">
+      <div id="menu">
+        <span>Press Start</span>
+      </div>
+      <div id="copyright">
+        <span>© </span><span id="year"></span><span> gatimus</span>
+        <script>
+          document.getElementById("year").innerHTML = new Date().getFullYear();
+        </script>
+      </div>
+    </div>
+    <div id="HUD">
+      <div id="score">SCORE: <span id="score_value">0</span></div>
+      <div id="high_score">HIGH SCORE: <span id="high_score_value">-</span></div>
+      <div id="help" onclick="help(true);"><i class="fa fa-question-circle"></i></div>
+    </div>
+
     <div id="overlay"></div>
     <div id="pause">PAUSED</div>
     <div class="progress-container">

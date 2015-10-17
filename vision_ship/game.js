@@ -102,6 +102,7 @@ var gameState = {
         game.loadLevel(game.next, function(data){
           game.next = data.next;
           game.level = new Level(game.canvas, data);
+          document.getElementById("title-text").style.visibility = "visible";
         });
       },
       loop: function(game){
@@ -127,7 +128,7 @@ var gameState = {
         this.transition(game, "level");
       },
       _onExit: function(game){
-        
+        document.getElementById("title-text").style.visibility = "hidden";
       }
     },
     level: {
@@ -136,6 +137,7 @@ var gameState = {
         game.loadLevel(game.next, function(data){
           game.next = data.next;
           game.level = new Level(game.canvas, data);
+          document.getElementById("HUD").style.visibility = "visible";
         });
       },
       loop: function(game){
@@ -161,7 +163,7 @@ var gameState = {
         this.transition(game, "paused");
       },
       _onExit: function(game){
-        
+        document.getElementById("title-text").style.visibility = "hidden";
       }
     },
     paused: {
