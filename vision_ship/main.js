@@ -44,29 +44,18 @@ $( document ).ready(function() {
   ]);
 */
 
-/*full screen?
-  var c = document.getElementById("game");
-  var s = 1;
-  if(window.innerWidth < window.innerHeight){
-    s = window.innerWidth/640;
-  } else if(window.innerHeight < window.innerWidth){
-    s = window.innerHeight/480;
-  }
-  
-
-  $("#game").css("transform", "scale(" + s.toString() + ", " + s.toString() + ") translate(30%, 20%)");
-  //$("#game").css("left", "0");
-  //$("#game").css("top", "0");
-  //$("#game").css("transform", "translate(50%, 50%)");
-
-  //c.style.
-  //c.setAttribute('style',"transform: scale(" + s.toString() + ", " + s.toString() + ");");
-  //c.setAttribute('style',"left: 50%; top: 50%; transform: translate(-50%, -50%);");
-  */
+  //scale to screen and center
+  var gameScreen = document.getElementById("game");
+  var scale = window.innerHeight/480;
+  //gameScreen.style.height = height.toString() + "px";
+  //gameScreen.style.width = ((height/3)*4).toString() + "px";
+  gameScreen.style.transform = "scale(" + scale.toString() + ") " +
+                               "translateX(-50%)";
 
 
 
 
+  //get query string
   var args = new (function (search) {
     if (search.length > 1) {
       for (var aItKey, nKeyId = 0, aCouples = search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {

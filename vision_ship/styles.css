@@ -2,7 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
 
 body {
-  background-color: gray;
+  background-color: #323232;
   margin: 0;
   padding: 0;
 }
@@ -58,11 +58,17 @@ kbd{
   text-transform: uppercase;
   width: 640px;
   height: 480px;
-  image-rendering: pixelated;
+  top: 0;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  transform-origin: top left;
+}
 
+#game > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #gameCanvas {
@@ -70,11 +76,6 @@ kbd{
 }
 
 #title-text, #HUD {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   visibility: hidden;
 }
 
