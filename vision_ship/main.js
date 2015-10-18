@@ -44,16 +44,13 @@ $( document ).ready(function() {
   ]);
 */
 
-  //scale to screen and center
+  //scale to window and center
   var gameScreen = document.getElementById("game");
   var scale = window.innerHeight/480;
   //gameScreen.style.height = height.toString() + "px";
   //gameScreen.style.width = ((height/3)*4).toString() + "px";
   gameScreen.style.transform = "scale(" + scale.toString() + ") " +
                                "translateX(-50%)";
-
-
-
 
   //get query string
   var args = new (function (search) {
@@ -69,7 +66,7 @@ $( document ).ready(function() {
       }
     }
   })(window.location.search);
-  console.log(args);
+  console.info(args);
   
   init(args);
 });
