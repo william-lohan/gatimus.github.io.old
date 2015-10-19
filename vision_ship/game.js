@@ -11,6 +11,7 @@ function Game(canvas, hud, fps, speed) {
 	createjs.Ticker.framerate = fps;
 	this.baseSpeed = (20/fps)*speed;
 	this.adjustedSpeed = this.baseSpeed;
+	this.next = "./levels/title_manifest.json";
 	
 	
 	//setup preload
@@ -20,12 +21,15 @@ function Game(canvas, hud, fps, speed) {
 	  console.error(event.title, event.message, event.data);
 	});
 	this.queue.on("progress", function(event){
+	  console.info("Loading Progress: ", Math.round(event.progress*100).toString() + "%");
 	  document.getElementById("progress").update(event.progress);
 	});
 	
 	//setup state
 	this.state = new machina.BehavioralFsm(gameState);
-	this.state.transition(this, "title");
+	this.state.transition(this, "loading");
+	
+	
 }
 
 /**
@@ -70,12 +74,6 @@ Game.prototype.setPaused = function(paused) {
  * @pram {String} levelURL
  */
 Game.prototype.loadLevel = function(levelURL, callBack) {
-
-	/*
-	$.getJSON(levelURL, null, function(data, textStatus, jqXHR) {
-		callBack(data);
-	});
-	*/
 	
 	this.queue.on("complete", callBack);
 	this.queue.loadManifest(levelURL);
@@ -97,28 +95,32 @@ var gameState = {
     },
     loading: {
       _onEnter: function(game){
+        console.info("Game State: Loading");
+        game.setPaused(true);
         document.getElementById("progress").update(0);
         document.getElementById("loading").style.visibility = "visible";
-      },
-      _onExit: function(game){
-        document.getElementById("loading").style.visibility = "hidden";
-      }
-    },
-    title: {
-      _onEnter: function(game){
-        console.log("Game State: Title Screen");
-        game.next = "./levels/title_manifest.json";
-        
         game.loadLevel(game.next, function(event){
           var data = game.queue.getResult("level");
           game.next = data.next;
           game.level = new Level(game.canvas, game.queue);
-          document.getElementById("title-text").style.visibility = "visible";
+          game.state.transition(game, data.state);
         });
       },
+      _onExit: function(game){
+        document.getElementById("loading").style.visibility = "hidden";
+        game.setPaused(false);
+      }
+    },
+    title: {
+      _onEnter: function(game){
+        console.info("Game State: Title Screen");
+        
+        
+
+        document.getElementById("title-text").style.visibility = "visible";
+      },
       loop: function(game){
-        //not being called
-        console.log("state loop");
+        //console.log("state loop");
         var commands = input.handleInput();
         for(var i = 0; i < commands.length; i++){
           console.log(commands[i]);
@@ -144,7 +146,7 @@ var gameState = {
     },
     level: {
       _onEnter: function(game){
-        console.log("Game State: Level");
+        console.info("Game State: Level");
         game.loadLevel(game.next, function(data){
           game.next = data.next;
           game.level = new Level(game.canvas, data);

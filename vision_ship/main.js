@@ -1,48 +1,9 @@
 
-var engine;
+//var engine;
 var game;
 var input;
 
-
-
-var stage;
-var bg1, bg2, bg3, bg1e, bg2e, bg3e;
-var shape;
-var animation;
-var paused = false;
-var moveWindow = false;
-
-var score = 0;
-var highScore = 0;
-
-
-
-
 window.onload = function() {
-  /*
-  var preload = new createjs.LoadQueue(true, "./assets/");
-  preload.installPlugin(createjs.Sound);
-  preload.on("complete", function(event){
-    console.log(event);
-    $(".progress-container").hide();
-    init();
-  });
-  preload.on("error", function(event){
-    console.log(event);
-    alert(event.title,event.message);
-  });
-  preload.on("progress", function(event){
-    console.log(event);
-    var pcent = Math.round(event.progress*100).toString() + "%";
-    var progressBar = $(".progress-bar");
-    progressBar.css("width", pcent);
-    $(".progress").text(pcent);
-  });
-  preload.loadManifest([
-    {id: "shot", src: "shot.mp3"},
-    {id: "shotw", src: "shot.wav"}
-  ]);
-*/
 
   //scale to window and center
   var gameScreen = document.getElementById("game");
@@ -66,7 +27,7 @@ window.onload = function() {
       }
     }
   })(window.location.search);
-  console.info(args);
+  console.dir(args);
   
   init(args);
 };
@@ -150,122 +111,13 @@ function init(args) {
   });
 */
 
-				
-  
 }
 
-
-function vBlank(event){
-  var delta = event.delta / createjs.Ticker.interval;
-  $("#debug").text("FPS: " + Math.round(1/event.delta*1000));
-  if(!paused){
-    if(Key.isDown(27)){
-      setPaused(true);
-    }
-    animation.move(
-      Key.isDown(Key.UP || 65),
-      Key.isDown(Key.LEFT),
-      Key.isDown(Key.DOWN),
-      Key.isDown(Key.RIGHT)
-    );
-  
-    var gamepads = navigator.getGamepads();
-    var pad = gamepads[0];
-    if (pad){
-      animation.move(
-        pad.buttons[12].pressed,
-        pad.buttons[14].pressed,
-        pad.buttons[13].pressed,
-        pad.buttons[15].pressed
-      );
-      
-      animation.move(
-        pad.axes[1] < -0.5,
-        pad.axes[0] < -0.5,
-        pad.axes[1] > 0.5,
-        pad.axes[0] > 0.5
-      );
-    }
-    
-    var bgSpeed = 5;
-    bg1.x -= ((bgSpeed*0.45)*0.45) * delta;
-    if(bg1.x < -1280){
-      bg1.x = 0;
-      score ++;
-    }
-    bg1e.x = bg1.x+1280;
-    bg2.x -= (bgSpeed*0.45) * delta;
-    if(bg2.x < -1280){
-      bg2.x = 0;
-      score ++;
-    }
-    bg2e.x = bg2.x+1280;
-    bg3.x -= bgSpeed * delta;
-    if(bg3.x < -1280){
-      bg3.x = 0;
-      score ++;
-    }
-    bg3e.x = bg3.x+1280;
-    
-    var pt = bg1.localToLocal(0,0,animation);
-		if (animation.hitTest(pt.x, pt.y)) {
-		  score = 0;
-		  console.log('Hit!');
-		}
-		
-    pt = bg2.localToLocal(0,0,animation);
-		if (animation.hitTest(pt.x, pt.y)) {
-		  score = 0;
-		  console.log('Hit!');
-		}
-		
-    if(score > highScore){
-      highScore = score;
-    }
-    $("#score_value").text(score);
-    $("#high_score_value").text(highScore);
-    
-    for(var i = 0; i < stage.children.length; i++){
-      if (typeof stage.getChildAt(i).update === "function") { 
-        stage.getChildAt(i).update(delta);
-      }
-    }
-  
-    stage.update();
-  } else {
-    if(Key.isDown(27)){
-      setPaused(false);
-    }
-  }
-
-}
-
-function setPaused(x){
-  if(x){
-    paused = true;
-    $("#overlay").show();
-    $("#pause").show();
-  } else {
-    paused = false;
-    $("#overlay").hide();
-    $("#pause").hide();
-  }
-}
-
-function help(x){
-  if(x){
-    setPaused(true);
-    $("#help_dialog").show();
-  } else {
-    setPaused(false);
-    $("#help_dialog").hide();
-  }
-}
 
 HTMLProgressElement.prototype.update = function(value){
   this.value = value;
   var percentString = Math.round(this.position*100).toString() + "%";
-  //this.innerHTML = percentString;
+  this.innerHTML = percentString;
   this.setAttribute("data-display", percentString);
 };
 

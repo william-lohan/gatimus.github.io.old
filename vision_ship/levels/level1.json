@@ -1,5 +1,6 @@
 {
 	"level": 1,
+	"state": "level",
 	"events": [
 		{
 			"type": "SPAWN",
@@ -115,16 +116,7 @@
 			"ticks": 0,
 			"data": {
 				"type": "PLAYER",
-				"sprite_sheet": {
-					"images": ["vision_ship.png"],
-					"frames": {"width":64, "height":64, "count":3},
-					"animations": {
-						"init":{
-							"frames": [0,1,2],
-							"speed": 1
-						}
-					}
-				},
+				"sprite_sheet": "player",
 				"action_0": {
 					"type": "SPAWN",
 					"comment": "player fire",

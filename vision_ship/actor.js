@@ -4,7 +4,7 @@
  * @pram {Object} data
  */
 function Actor(data) {
-	var spriteSheet = new createjs.SpriteSheet(data.sprite_sheet);
+	var spriteSheet = data.sprite_sheet;
 	createjs.Sprite.call(this, spriteSheet, "init");
 	this.data = data;
 	this.x = data.x | 0;
