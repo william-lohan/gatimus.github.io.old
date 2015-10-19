@@ -47,7 +47,7 @@
   
   <!--<script data-main="scripts/main" src="scripts/require.js"></script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="https://code.createjs.com/createjs-2015.05.21.combined.js"></script> 
+  <script src="https://code.createjs.com/createjs-2015.05.21.combined.js"></script>
 
   <script src="scripts/lodash.js"></script>
   <script src="scripts/machina.js"></script>
@@ -60,6 +60,7 @@
   <!--<div id="debug">0, 0</div>-->
   <div id="game">
     <canvas id="gameCanvas" width="640" height="480"></canvas>
+    
     <div id="title-text">
       <div id="menu">
         <span>Press Start</span>
@@ -71,6 +72,7 @@
         </script>
       </div>
     </div>
+    
     <div id="HUD">
       <div id="score">SCORE: <span id="score_value">0</span></div>
       <div id="high_score">HIGH SCORE: <span id="high_score_value">-</span></div>
@@ -128,6 +130,11 @@
         </table>
       </div>
     </div>
+    
+    <div id="loading">
+      <progress id="progress" value="0" data-display="0%">0%</progress>
+    </div>
+    
   </div>
 
 

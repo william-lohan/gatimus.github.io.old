@@ -18,7 +18,7 @@ var highScore = 0;
 
 
 
-$( document ).ready(function() {
+window.onload = function() {
   /*
   var preload = new createjs.LoadQueue(true, "./assets/");
   preload.installPlugin(createjs.Sound);
@@ -69,7 +69,7 @@ $( document ).ready(function() {
   console.info(args);
   
   init(args);
-});
+};
 
 function init(args) {
   
@@ -261,4 +261,11 @@ function help(x){
     $("#help_dialog").hide();
   }
 }
+
+HTMLProgressElement.prototype.update = function(value){
+  this.value = value;
+  var percentString = Math.round(this.position*100).toString() + "%";
+  //this.innerHTML = percentString;
+  this.setAttribute("data-display", percentString);
+};
 

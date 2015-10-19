@@ -4,13 +4,20 @@
  * @pram {HTMLCanvasElement | String | Object} canvas
  * @pram {String | Object} levelData 
  */
-function Level(canvas, levelData) {
+function Level(canvas, loadQueue) {
 	createjs.Stage.call(this, canvas);
-	this.levelData = levelData;
+	//createjs.SpriteStage.call(this, canvas, false, false);
+	this.levelData = loadQueue.getResult("level");
+	for (var i = 0; i < this.levelData.events.length; i++) {
+	  if(this.levelData.events[i].data.sprite_sheet){
+	    this.levelData.events[i].data.sprite_sheet = loadQueue.getResult(this.levelData.events[i].data.sprite_sheet);
+	  }
+	}
 	this.ticks = 0;
 }
 
 Level.prototype = Object.create(createjs.Stage.prototype);
+//Level.prototype = Object.create(createjs.SpriteStage.prototype);
 
 /**
  * --
@@ -38,10 +45,9 @@ Level.prototype.update = function(speed){
 		}
 	}
 
-	//console.log(this.children.length);
-
-
 	createjs.Stage.prototype.update.call(this);//call super
+	//createjs.SpriteStage.prototype.update.call(this);//call super
+	
 	this.ticks ++;
 };
 

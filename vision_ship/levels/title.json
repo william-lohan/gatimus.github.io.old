@@ -7,11 +7,7 @@
 			"ticks": 0,
 			"data": {
 				"type": "BG",
-				"sprite_sheet": {
-					"images": ["bg1.png"],
-					"frames": {"width":1280, "height":480, "count":1},
-					"animations": {"init": 0}
-				},
+				"sprite_sheet": "background1",
 				"x": 0,
 				"onTick": {
 					"x": -0.10125,
@@ -25,11 +21,7 @@
 			"ticks": 0,
 			"data": {
 				"type": "BG",
-				"sprite_sheet": {
-					"images": ["bg1.png"],
-					"frames": {"width":1280, "height":480, "count":1},
-					"animations": {"init": 0}
-				},
+				"sprite_sheet": "background1",
 				"x": 1280,
 				"onTick": {
 					"x": -0.10125,
@@ -43,11 +35,7 @@
 			"ticks": 0,
 			"data": {
 				"type": "BG",
-				"sprite_sheet": {
-					"images": ["bg2.png"],
-					"frames": {"width":1280, "height":480, "count":1},
-					"animations": {"init": 0}
-				},
+				"sprite_sheet": "background2",
 				"x": 0,
 				"onTick": {
 					"x": -0.225,
@@ -61,11 +49,7 @@
 			"ticks": 0,
 			"data": {
 				"type": "BG",
-				"sprite_sheet": {
-					"images": ["bg2.png"],
-					"frames": {"width":1280, "height":480, "count":1},
-					"animations": {"init": 0}
-				},
+				"sprite_sheet": "background2",
 				"x": 1280,
 				"onTick": {
 					"x": -0.225,
@@ -79,11 +63,7 @@
 			"ticks": 0,
 			"data": {
 				"type": "BG",
-				"sprite_sheet": {
-					"images": ["bg3.png"],
-					"frames": {"width":1280, "height":480, "count":1},
-					"animations": {"init": 0}
-				},
+				"sprite_sheet": "background3",
 				"x": 0,
 				"onTick": {
 					"x": -0.5,
@@ -97,11 +77,7 @@
 			"ticks": 0,
 			"data": {
 				"type": "BG",
-				"sprite_sheet": {
-					"images": ["bg3.png"],
-					"frames": {"width":1280, "height":480, "count":1},
-					"animations": {"init": 0}
-				},
+				"sprite_sheet": "background3",
 				"x": 1280,
 				"onTick": {
 					"x": -0.5,
@@ -115,11 +91,7 @@
 			"ticks": 0,
 			"data": {
 				"type": "title",
-				"sprite_sheet": {
-					"images": ["./assets/title.png"],
-					"frames": {"width":640, "height":480, "count":1},
-					"animations": {"init": 0}
-				},
+				"sprite_sheet": "logo",
 				"x": 0,
 				"y": 0
 			} 

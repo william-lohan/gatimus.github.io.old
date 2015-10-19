@@ -7,10 +7,23 @@
  */
 function Game(canvas, hud, fps, speed) {
 	this.canvas = canvas;
-	//hud
+	//TODO hud
 	createjs.Ticker.framerate = fps;
 	this.baseSpeed = (20/fps)*speed;
 	this.adjustedSpeed = this.baseSpeed;
+	
+	
+	//setup preload
+	this.queue = new createjs.LoadQueue();
+	this.queue.installPlugin(createjs.Sound);
+	this.queue.on("error", function(event){
+	  console.error(event.title, event.message, event.data);
+	});
+	this.queue.on("progress", function(event){
+	  document.getElementById("progress").update(event.progress);
+	});
+	
+	//setup state
 	this.state = new machina.BehavioralFsm(gameState);
 	this.state.transition(this, "title");
 }
@@ -23,9 +36,9 @@ function Game(canvas, hud, fps, speed) {
  */
 Game.prototype.loop = function(event, input){
   this.adjustedSpeed = (event.delta/createjs.Ticker.interval)*this.baseSpeed;
-  this.state.loop(this);
+  
 	if(!event.paused){
-		
+		this.state.loop(this);
 		//var playerCommands = input.handleInput();
 		//(this.level){
 			//for (var i = 0; i < playerCommands.length; i++) {
@@ -57,28 +70,16 @@ Game.prototype.setPaused = function(paused) {
  * @pram {String} levelURL
  */
 Game.prototype.loadLevel = function(levelURL, callBack) {
+
 	/*
-	var request = new XMLHttpRequest();
-	request.addEventListener("load", function(event){
-		console.log(request.responseText);
-		var levelData = JSON.parse(JSON.stringify(request.response));
-		console.log(levelData.events);
-	});
-	request.open("GET", levelURL);
-	request.send();
-	*/
-	
 	$.getJSON(levelURL, null, function(data, textStatus, jqXHR) {
 		callBack(data);
 	});
-	
-	/*
-	var preload = new createjs.LoadQueue();
-	preload.addEventListener("fileload", function(event){
-		console.log(event);
-	});
-	preload.loadFile(levelURL);
 	*/
+	
+	this.queue.on("complete", callBack);
+	this.queue.loadManifest(levelURL);
+	
 };
 
 var gameState = {
@@ -94,14 +95,24 @@ var gameState = {
             this.transition(game, "title");
         }
     },
+    loading: {
+      _onEnter: function(game){
+        document.getElementById("progress").update(0);
+        document.getElementById("loading").style.visibility = "visible";
+      },
+      _onExit: function(game){
+        document.getElementById("loading").style.visibility = "hidden";
+      }
+    },
     title: {
       _onEnter: function(game){
         console.log("Game State: Title Screen");
-        game.next = "./levels/title.json";
+        game.next = "./levels/title_manifest.json";
         
-        game.loadLevel(game.next, function(data){
+        game.loadLevel(game.next, function(event){
+          var data = game.queue.getResult("level");
           game.next = data.next;
-          game.level = new Level(game.canvas, data);
+          game.level = new Level(game.canvas, game.queue);
           document.getElementById("title-text").style.visibility = "visible";
         });
       },
@@ -163,7 +174,7 @@ var gameState = {
         this.transition(game, "paused");
       },
       _onExit: function(game){
-        document.getElementById("title-text").style.visibility = "hidden";
+        document.getElementById("HUD").style.visibility = "hidden";
       }
     },
     paused: {
