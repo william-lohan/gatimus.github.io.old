@@ -1,4 +1,5 @@
 #Vision Ship
+Moved to [github.com/gatimus/vision_ship](github.com/gatimus/vision_ship)
 Attempt at 16/8-bit style, side-scrolling, space shooter.
 
 [http://gatimus.github.io/vision_ship/index.html](http://gatimus.github.io/vision_ship/index.html)
