@@ -1,7 +1,0 @@
-{
-  "manifest": [
-    {"id": "shot", "src": "shot.mp3"},
-    {"id": "shotw", "src": "shot.wav"}
-  ],
-  "path": "./assets/"
-}
